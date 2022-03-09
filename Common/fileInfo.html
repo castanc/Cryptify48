@@ -1,0 +1,33 @@
+<div class="row label-size">
+    <p><i>${selFile.Name}</i></p></br>
+    <p>${selFile.lastMofiedDate}</p></br>
+    <p>${selFile.type}</p></br>
+    <p>${selFile.size}</p></br>
+</div>
+
+
+<div class="row label-size">
+    <table>
+        <tr>
+            <td>File Name:</td>
+            <td>${selFile.name}</td>
+        </tr>
+        <tr>
+            <td>Date last Access:</td>
+            <td>${selFile.lastMofiedDate}</td>
+        </tr>
+        <tr>
+            <td>File Type:</td>
+            <td>>${selFile.type}</td>
+        </tr>
+        <tr>
+            <td>File Size:</td>
+            <td>${selFile.size}</td>
+        </tr>
+    </table>
+
+</div>
+
+<i class="fas fa-file-pdf" title="Open Binary File: Image,PDF,Excel,Word,Audio" id="clearText" style="margin-left: -30px; cursor: pointer;"
+onclick="testRemote()" style="float:right"></i>
+<i class="fas fa-file-pdf"></i>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Cryptify</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="Accept-CH" content="Device-Memory">
+
+  <base target="_top">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+  <link rel="stylesheet" href="../css/topnavmenu.css">
+  <link rel="stylesheet" href="../css/stylesheet.css">
+  <link rel="stylesheet" href="../css/spacer.css">
+  <script src="../common/globals.js"></script>
+  <script src="../common/sjcl.js"></script>
+  <script src="../common/MD5Helper.js"></script>
+  <script src="../common/fsaccess.js"></script>
+  <script src="../common/encrypt2.js"></script>
+  <script src="../common/decrypt2.js"></script>
+  <script src="../common/fileopen.js"></script>
+  <script src="../common/config.js"></script>
+  <script src="../common/download.js"></script>
+  <script src="../common/filerender.js"></script>
+  <script src="../common/utils.js"></script>
+  <script src="../common/servercalls.js"></script>
+  <script src="../common/menu.js"></script>
+  <script src="index.js"></script>
+</head>
+
+
+
+<body class="text-responsive dark-forced">
+
+  <div id="bigFile" class="alert alert-danger" style="display:none">
+    <strong>Danger!</strong> This file is too big, can not be encrypted.
+  </div>
+
+
+  <div id="main">
+
+
+    <div id="divTitle" class="card1 text-center"></div>
+
+    <div id="content">
+
+      <!-- 
+        https://www.w3schools.com/icons/fontawesome5_icons_security.asp  
+      -->
+
+      <form id="mainForm">
+
+      <div id="iconMenu" class="separation-all" style="display:none">
+      </div>
+
+    </div>
+
+    <div id="fileSelection" class="separation-top file-fontsize" style="display:none">
+      <div class="row">
+        <input type="file" id="files" name="files[]" class="icon-size separation-center" />
+      </div>
+    </div>
+
+
+    <div id="divHelp" style="display:none" onclick="closeHelp()">
+      <div id="helpText">
+      </div>
+    </div>
+
+
+    <div id="result" class="icon-size separation-top"> </div>
+
+      <div id="PAGE1">
+
+        <div id="divInputText" class="row separation-all">
+            <label id="lblText" for="inputText"><i>Enter Text</i></label>
+
+          <textarea class="form-control card3 field-size" id="inputText" name="inputText"
+            rows="6'
+            oninput="setData(this.value)" 
+            onfocus="firstData()" 
+            onblur="finishText()"
+            placeholder="Type a message here" onfocus="firstData()"
+            ></textarea>
+        </div>
+      </div>
+
+      <div id="PAGE2" class="separation-all card1" style="display: none;">
+
+        <div>
+          <div id="divPassword" class="separation-top separation-bot separation-center">
+            <div class="row">
+              <label id="lblPassword" for="userPassword"><i>* Enter Password:</i></label>
+            </div>
+            <div class="row" class="separation-center card3">
+              <div class="col-md-12">
+                <input type="password" id="userPassword" name="userPassword" 
+                class="form-control dark-forced field-size"
+                  placeholder="Password" oninput="checkPassword()">
+
+              </div>
+              <div class="col-md-1" style="display:none">
+                <i class="far fa-eye icon-size3" id="togglePassword" style="cursor: pointer;" title="Reveal"></i>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <label id="lblHint" for="pwdHint"><i>Password Hint:</i></label>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <textarea rows="2" id="pwdHint" name="pwdHint" class="field-size form-control card3"
+                  placeholder="Password hint."></textarea>
+              </div>
+              <div id="divSharePwd" class="col-md-1" style="display:none">
+                <i class="fas fa-share icon-size3" id="sharePwd" style="text-align:right; cursor: pointer;"
+                  onclick="doSharePwd()" title="Share"></i>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="divFileInfo" style="display:none"></div>
+
+  </div>
+  </form>
+
+
+
+  <div id="divMedia" style="display:none">
+    <div id="divText" style="display:none">
+      <textarea id="loadedText" class="out-text"  disabled
+      rows="15"
+      ></textarea>
+    </div>
+
+    <div id="divImage" style="display:none">
+      <img id="imgView">
+    </div>
+
+    <div id="divVideo" style="display:none">
+    </div>
+
+    <div id="divAudio" style="display:none">
+    </div>
+
+    <div id="divPDF" style="display:none">
+    </div>
+  </div>
+
+
+  <div id="spinner" class="spinner-border text-primary icon-size2" id="spinner" role="status" style="display:none;">
+    <span class="sr-only">Loading...</span>
+  </div>
+
+
+
+  <div id="divSysInfo" class="separation-all" class="card-settings" style="display: none;">
+    <div>
+      <form id="sysInfoForm">
+        <!--
+          <div class="col-md-1 text-responsive">
+            <i class="fa fa-times" title="Clear Text" id="clearText" style="margin-left: -30px; cursor: pointer;"
+              onclick="toggleSysInfo()"></i>
+          </div>
+          -->
+
+          <!--
+        <div class="row">
+          <label class="separation-top"><i>User:</i></label>
+          <input id="txUserId" type="text" class="form-control text-responsive" name="txUserId" disabled></input>
+        </div>
+        -->
+
+
+        <div class="row">
+          <label class="separation-top"><i>Dark Mode:</i></label>
+          <input id="txDarkMode" type="text" class="form-control text-responsive" name="fieldDark" disabled></input>
+        </div>
+        <div class="row">
+          <label class="separation-top"><i>File API Supported:</i></label>
+          <input id="txFileAPISupported" type="text" class="form-control text-responsive" name="txFileAPISupported"
+            disabled></input>
+        </div>
+        <div class="row">
+          <label class="separation-top"><i>Clipboard API Supported:</i></label>
+          <input id="txCanCopy" type="text" class="form-control text-responsive" name="txCanCopy" disabled></input>
+        </div>
+        <div class="row">
+          <label class="separation-top"><i>Protocol:</i></label>
+          <input id="txProtocol" type="text" class="form-control text-responsive" name="txProtocol" disabled></input>
+        </div>
+        <div class="row">
+          <label class="separation-top"><i>Window Width:</i></label>
+          <input id="txWidth" type="text" class="form-control text-responsive" name="txWidth" disabled></input>
+        </div>
+
+        <div class="row">
+          <label class="separation-top"><i>RAM Memory:</i></label>
+          <input id="txRAM" type="text" class="form-control text-responsive" name="txWidth" disabled></input>
+        </div>
+
+        <div class="row">
+          <label class="separation-top"><i>Mobile:</i></label>
+          <input id="txMobile" type="text" class="form-control text-responsive" name="txMmobile" disabled></input>
+        </div>
+        <div class="row">
+          <label class="separation-top"><i>User Agent:</i></label>
+          <textarea rows="4" class="form-control text-responsive" id="txUserAgent" name="txUserAgent"></textarea>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="divSysSettings" class="separation-all card-settings" style="display: none;">
+    <div>
+      <form id="sysSettingsForm">
+        <div class="row">
+          <label class="separation-top"><i>Minimum password length:</i></label>
+          <input id="txMinPwdLen" type="numeric" class="form-control text-responsive" name="txMinPwdLen"></input>
+        </div>
+
+
+        <div class="row">
+          <label class="separation-top"><i>Generated Password Length:</i></label>
+          <input id="txGenPwdLen" onblur="validateMinPassword(this.value)" type="number"
+            class="form-control text-responsive" onblur="validateMaxPassword(this.value)" name="txGenPwdLen"></input>
+        </div>
+
+        <div class="row">
+          <label class="separation-top"><i>Show Media after Open:</i></label>
+          <input id="chbShowMedia" type="checkbox" class="form-control text-responsive"
+            name="chbShowMedia"></input>
+        </div>
+
+        <div class="row">
+          <label class="separation-top"><i>Send Instructions:</i></label>
+          <input id="chbSendInstructions" type="checkbox" class="form-control text-responsive"
+            name="chbSendInstructions"></input>
+        </div>
+
+        <div class="row">
+          <label class="separation-top"><i>Send Decrypt Landing Page Link:</i></label>
+          <input id="chbSendLink" type="checkbox" class="form-control text-responsive" name="chbSendLink"></input>
+        </div>
+
+        <div class="row">
+          <label class="separation-top"><i>Copy decrypted text to clipboard</i></label>
+          <input id="chbCopy" type="checkbox" class="form-control text-responsive" name="chCopy"></input>
+        </div>
+
+
+        <div class="row">
+          <label class="separation-top"><i>Show Help Screen on Start:</i></label>
+          <input id="chbHelp" type="checkbox" class="form-control text-responsive" name="chbHelp"></input>
+        </div>
+
+        <div class="row">
+          <label class="separation-top"><i>Fix Zoom Issue:</i></label>
+          <input id="chbZoom" type="checkbox" class="form-control text-responsive" name="chbZoom"></input>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div id="trace"></div>
+
+  <div class="footer-wrapper flex-shrink-0 p-10 text-center bg-content">
+    <div class="footer">
+      <div id="result2" class="container h4 mb-4 text-info text-center"></div>
+      <div id="error" class="container h4 mb-4 text-danger"></div>
+    </div>
+  </div>
+
+  <div id="copyRight" class="container h4 mb-4 text-info text-center">
+  </div>
+
+  <!-- Modal -->
+  <div id="modalPopUp" class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="modalBody">
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
