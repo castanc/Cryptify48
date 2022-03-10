@@ -405,7 +405,8 @@ ${nextIcon} Next page</br>
 `;
 
         showInfoAt("helpText", helpHtml);
-        showBlock("divHelp");
+        if ( config.ShowHelp )
+            showBlock("divHelp");
 
     }
     else hideControl("divHelp");
