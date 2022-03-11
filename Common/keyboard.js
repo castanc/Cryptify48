@@ -13,9 +13,11 @@ const Keyboard = {
 
     foreign: {
         tildeOrig: "naoNAO",
-        tildeShifted: [327, 227, 245, 209, 195, 336],
-        aCute: "aeiouyAEIOUY",
-        aCuteShifted: [225, 233, 237, 243, 250, 253, 193, 201, 205, 211, 218, 221]
+        tildeShifted: [327, 227, 245, 
+            209, 195, 336],
+        aCute: "aeiouynAEIOUYN",
+        aCuteShifted: [225, 233, 237, 243, 250, 253, 241,
+            193, 201, 205, 211, 218, 221,209]
     },
 
     eventHandlers: {
@@ -64,7 +66,7 @@ const Keyboard = {
             "'","q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
             "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
             "done", "z", "x", "c", "v", "b", "n", "m",",", ".", "?",
-            "[","]","space", "acute", "tilde"
+            "[","]","space", "acute" 
         ];
 
         // Creates HTML for an icon

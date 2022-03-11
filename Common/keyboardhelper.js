@@ -20,12 +20,12 @@ function keyed(k) {
             k = k.substr(0, k.length - 1) + Keyboard.shiftKeys.shifted.substr(ix, 1);
         }
     }
-    if (Keyboard.properties.tilde) {
-        if (Keyboard.foreign.tildeOrig.includes(last)) {
-            let ix = Keyboard.foreign.tildeOrig.indexOf(last);
-            k = k.substr(0, k.length - 1) + String.fromCharCode(Keyboard.foreign.tildeShifted[ix]);
-        }
-    }
+    // if (Keyboard.properties.tilde) {
+    //     if (Keyboard.foreign.tildeOrig.includes(last)) {
+    //         let ix = Keyboard.foreign.tildeOrig.indexOf(last);
+    //         k = k.substr(0, k.length - 1) + String.fromCharCode(Keyboard.foreign.tildeShifted[ix]);
+    //     }
+    // }
     if (Keyboard.properties.acute) {
         if (Keyboard.foreign.aCute.includes(last)) {
             let ix = Keyboard.foreign.aCute.indexOf(last);
