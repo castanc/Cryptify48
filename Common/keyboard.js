@@ -6,8 +6,16 @@ const Keyboard = {
     },
 
     shiftKeys: {
-        original: "1234567890,.?",
-        shifted: "!@#$%^&*();:/"
+        original: "1234567890,.?'[]",
+        shifted: "!@#$%^&*();:/\"{}"
+    },
+
+
+    foreign: {
+        tildeOrig: "naoNAO",
+        tildeShifted: [327, 227, 245, 209, 195, 336],
+        aCute: "aeiouyAEIOUY",
+        aCuteShifted: [225, 233, 237, 243, 250, 253, 193, 201, 205, 211, 218, 221]
     },
 
     eventHandlers: {
@@ -17,7 +25,10 @@ const Keyboard = {
 
     properties: {
         value: "",
-        capsLock: false
+        capsLock: false,
+        tilde: false,
+        acute: false,
+        currentKeyElement: null
     },
 
     init() {
@@ -50,16 +61,17 @@ const Keyboard = {
         const fragment = document.createDocumentFragment();
         const keyLayout = [
             "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
-            "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
+            "'","q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
             "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
-            "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
-            "space"
+            "done", "z", "x", "c", "v", "b", "n", "m",",", ".", "?",
+            "[","]","space", "acute", "tilde"
         ];
 
         // Creates HTML for an icon
         const createIconHTML = (icon_name) => {
             return `<i class="material-icons">${icon_name}</i>`;
         };
+
 
         keyLayout.forEach(key => {
             const keyElement = document.createElement("button");
@@ -81,6 +93,7 @@ const Keyboard = {
 
                     break;
 
+
                 case "caps":
                     keyElement.classList.add("keyboard__key--wide", "keyboard__key--activatable");
                     keyElement.innerHTML = createIconHTML("keyboard_capslock");
@@ -91,6 +104,31 @@ const Keyboard = {
                     });
 
                     break;
+
+                case "tilde":
+                    //setup toggeable button
+                    keyElement.classList.add("keyboard__key--activatable");
+                    keyElement.innerHTML = createIconHTML("circle");
+
+                    keyElement.addEventListener("click", () => {
+                        //this._toggleCapsLock();
+                        this.properties.tilde = !this.properties.tilde;
+                        keyElement.classList.toggle("keyboard__key--active", this.properties.tilde);
+                    });
+                    break;
+
+                case "acute":
+                    //setup toggeable button
+                    keyElement.classList.add("keyboard__key--activatable");
+                    keyElement.innerHTML = createIconHTML("circle");
+
+                    keyElement.addEventListener("click", () => {
+                        //this._toggleCapsLock();
+                        this.properties.acute = !this.properties.acute;
+                        keyElement.classList.toggle("keyboard__key--active", this.properties.acute);
+                    });
+                    break;
+
 
                 case "enter":
                     keyElement.classList.add("keyboard__key--wide");
@@ -170,8 +208,7 @@ const Keyboard = {
                         key.textContent = this.shiftKeys.shifted.substr(ix, 1);
                     }
                 }
-                else
-                {
+                else {
                     if (this.shiftKeys.shifted.includes(key.textContent)) {
                         let ix = this.shiftKeys.shifted.indexOf(key.textContent);
                         key.textContent = this.shiftKeys.original.substr(ix, 1);
