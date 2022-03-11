@@ -281,7 +281,6 @@ function warningMessage() {
 
 function togglePage() {
     showMessage("");
-    Keyboard.value = "";
     if (page == 1) {
         warningMessage();
         setCurrentField("inputText");
@@ -417,10 +416,7 @@ ${nextIcon} Next page</br>
 }
 
 function clear() {
-        event.preventDefault();
-
-    console.clear();
-
+    event.preventDefault();
     closeAllAux();
     hideControl("divHelp");
 
@@ -577,7 +573,7 @@ function toggleSysInfo() {
 
 
 function toggleSettings() {
-        event.preventDefault();
+    event.preventDefault();
     hideControl("divHelp");
     settingsOpen = !settingsOpen;
     if (settingsOpen) {

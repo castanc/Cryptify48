@@ -10,7 +10,7 @@ function openKeyboard(force=false) {
 }
 
 function keyed(k) {
-    console.log("keyed", k);
+    console.log(currentField, k);
     let x = document.getElementById(currentField);
     x.value = k;
 }
@@ -26,12 +26,10 @@ function setCurrentField(cField) {
     let x = document.getElementById(cField);
     x.style.backgroundColor = "white";
     x.style.color = "black";
-    let dbgMsg = `setCurrentField(${cField}) [${Keyboard.value}]`;
-    console.log(dbgMsg);
-    Keyboard.value = getField(cField);
-    dbgMsg = `setCurrentField(${cField}) [${Keyboard.value}]`;
-    console.log(dbgMsg);
+    Keyboard.properties.value = x.value;
 
+    let dbgMsg = `setCurrentField(${cField}) [${Keyboard.properties.value}]`;
+    console.log(dbgMsg);
 }
 
 function disableInputs(val=true)

@@ -212,8 +212,8 @@ function getSettingsSave() {
 
         ctl = document.getElementById("chbZoom");
         val = ctl.checked;
-        configChanged = configChanged || config.UseGreenMenu != val;
-        config.UseGreenMenu = val;
+        configChanged = configChanged || config.UseGreenKeyboard != val;
+        config.UseGreenKeyboard = val;
 
         if ( config.FixZoomIssue)
         {
