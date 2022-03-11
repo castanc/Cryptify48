@@ -13,6 +13,14 @@ function keyed(k) {
     console.log(currentField, k);
     let x = document.getElementById(currentField);
     x.value = k;
+    if ( currentField == "userPassword" )
+    {
+        if (  k.length > 0)
+            showBlock("divViewPassword");
+        else
+            hideControl("divViewPassword");
+    }
+
 }
 
 

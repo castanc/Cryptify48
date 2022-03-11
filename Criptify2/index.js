@@ -195,9 +195,33 @@ function getPassword() {
 }
 
 
+//https://www.csestack.org/hide-show-password-eye-icon-html-javascript/
+function enableViewPassword(idField, eyeField) {
+	const togglePassword = document.getElementById(eyeField);
+	const password = document.getElementById(idField);
+
+	togglePassword.addEventListener('click', function (e) {
+		// toggle the type attribute
+		e.preventDefault();
+		//event.preventDefault();
+		const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+		password.setAttribute('type', type);
+		// toggle the eye slash icon
+		this.classList.toggle('fa-eye-slash');
+	});
+}
+
+
+
+
 function checkPassword() {
     let pwd = getField("userPassword");
-    let dataReady = data.length > 0 && pwd.length >= config.MinPwdLen;
+    if ( pwd.length > 0 )
+        showBlock("divViewPassword");
+    else
+        hideControl("divViewPassword");
+
+    let dataReady = pwd.length >= config.MinPwdLen;
     dataReady = true;
     if (dataReady) {
         showBlock("divEncrypt");
@@ -468,6 +492,7 @@ function clear() {
 
     hideControl("divView");
     hideControl("divHide");
+    hideControl("divViewPassord");
     gotoPage(1);
     currentField = "inputText";
     openKeyboard();
@@ -703,6 +728,21 @@ function function6() {
         saveLogs();
     });
 
+
+    const togglePassword = document.getElementById("viewPassword");
+    const password = document.getElementById("userPassword");
+    
+	togglePassword.addEventListener('click', function (e) {
+		// toggle the type attribute
+		//e.preventDefault();
+		event.preventDefault();
+		const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+		password.setAttribute('type', type);
+		// toggle the eye slash icon
+		this.classList.toggle('fa-eye-slash');
+	});
+
+
     if (location.protocol != "https");
         showHelp();
 
@@ -803,5 +843,6 @@ ${hint} ${pwd}`, "");
 
 
 //Main entry point
+
 window.addEventListener('load', function6);
 

@@ -80,7 +80,15 @@ function createMenu(step="start") {
         </button>
     </div>
 
-    
+
+    <div id="divViewPassword" class="text-center" style="display:none">
+    <button class="btn btn-secondary separation-btn-right red">
+      <i class="far fa-eye" title="View Media" id="viewPassword"  style="cursor: pointer";
+      ></i>
+        </button>
+    </div>
+
+
     <div id="divHide" class="text-center" style="display:none">
     <button class="btn btn-secondary separation-btn-right">
       <i class="far fa-eye-slash" title="Hide Media" id="viewMedia"  style="cursor: pointer;"
