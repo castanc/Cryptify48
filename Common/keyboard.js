@@ -5,6 +5,11 @@ const Keyboard = {
         keys: []
     },
 
+    shiftKeys: {
+        original: "1234567890,.?",
+        shifted: "!@#$%^&*();:/"
+    },
+
     eventHandlers: {
         oninput: null,
         onclose: null
@@ -152,11 +157,28 @@ const Keyboard = {
     },
 
     _toggleCapsLock() {
+
         this.properties.capsLock = !this.properties.capsLock;
 
         for (const key of this.elements.keys) {
             if (key.childElementCount === 0) {
                 key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+
+                if (this.properties.capsLock) {
+                    if (this.shiftKeys.original.includes(key.textContent)) {
+                        let ix = this.shiftKeys.original.indexOf(key.textContent);
+                        key.textContent = this.shiftKeys.shifted.substr(ix, 1);
+                    }
+                }
+                else
+                {
+                    if (this.shiftKeys.shifted.includes(key.textContent)) {
+                        let ix = this.shiftKeys.shifted.indexOf(key.textContent);
+                        key.textContent = this.shiftKeys.original.substr(ix, 1);
+                    }
+
+                }
+
             }
         }
     },

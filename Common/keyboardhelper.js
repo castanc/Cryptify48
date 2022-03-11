@@ -12,7 +12,18 @@ function openKeyboard(force=false) {
 function keyed(k) {
     console.log(currentField, k);
     let x = document.getElementById(currentField);
+    
+    if ( Keyboard.properties.capsLock)
+    {
+        let last = k.substr(k.length-1);
+        if (Keyboard.shiftKeys.original.includes(last)) {
+            let ix = Keyboard.shiftKeys.original.indexOf(last);
+            k = k.substr(0,k.length-1) + Keyboard.shiftKeys.shifted.substr(ix,1);
+            Keyboard.properties.value = k;
+        }
+    }
     x.value = k;
+
     if ( currentField == "userPassword" )
     {
         if (  k.length > 0)
