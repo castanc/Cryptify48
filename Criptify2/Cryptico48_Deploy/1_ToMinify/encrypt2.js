@@ -4,13 +4,13 @@ function encryptString(data, userid, password, date = null) {
         date = new Date();
     eo = {};    //encryptObject
     eo.DateCreated = date;
-    eo.UserId = userid;
+    eo.deviceId = deviceId;
     eo.DateExpiry = new Date();
     eo.Version = versionNumber;
     eo.data1 = data;
 
     os = {};
-    os.UserId = userid;
+    os.deviceId = deviceId;
     os.data = "";
     os.data2 = "";
 

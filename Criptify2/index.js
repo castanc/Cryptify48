@@ -578,27 +578,6 @@ function doReadFile(evt) {
 }
 
 
-function saveEmail(email) {
-    event.preventDefault();
-    if (!email || email.length == 0)
-        email = getField("userEmail");
-
-    if (validateEmail(email)) {
-        userEmail = email;
-        config.UserEmail = email;
-        setField("txUserId", email);
-        saveConfig();
-        createMenu();
-        initTogglePassword();
-        hideControl("divUSER");
-        showHelp();
-        showBlock("PAGE1");
-        openKeyboard();
-        disableInputs(mobile);
-
-    }
-    else showError("invalid Email");
-}
 
 
 
@@ -665,6 +644,31 @@ function hideSysInfo() {
     hideControl("sysInfo");
 }
 
+
+function saveEmail(email) {
+    event.preventDefault();
+    if (!email || email.length == 0)
+        email = getField("userEmail");
+
+    if (validateEmail(email)) {
+        userEmail = email;
+        createConfig();
+        saveConfig();
+        initConfig();
+        if (location.protocol == "https:")
+            registerFirstTime();
+        createMenu();
+        initTogglePassword();
+        hideControl("divUSER");
+        showHelp();
+        showBlock("PAGE1");
+        openKeyboard();
+        disableInputs(mobile);
+    }
+    else showError("invalid Email");
+}
+
+
 function function6() {
     window.onerror = function (msg, url, line) {
         showError(`${msg}</br>${url}</br>Line:${line}`);
@@ -676,15 +680,6 @@ function function6() {
     mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
     getIsDesktop();
 
-    setField("txDarkMode", darkMode);
-    setField("txFileAPISupported", supported.toString());
-    setField("txCanCopy", canCopy.toString());
-    setField("txUserAgent", navigator.userAgent);
-    setField("txProtocol", location.protocol);
-    setField("txWidth", window.innerWidth);
-    setField("txMobile", mobile);
-    setField("txRAM", navigator.deviceMemory.toString());
-    setField("txUserId", config.UserEmail);
     maxData = navigator.deviceMemory * 1024 * 1024 * 3;
 
 
@@ -726,24 +721,33 @@ function function6() {
     if (mobile)
         config.UseGreenKeyboard = true;
 
-        //start********************************************************************************
+    //start********************************************************************************
+
+    localStorage.removeItem("data");
+    localStorage.removeItem("user");
+    localStorage.removeItem("device");
+    isGoogleVer = true;
+    console.log("isGoogleVersion:", isGoogleVer);
+
     getSavedUserEmail();
     if (userEmail.length == 0) {
-        createMenu("user");
         hideControl("PAGE1");
         showBlock("divUSER");
         showMessage("Please provide an email address. ( No password required).")
         setCurrentField("userEmail");
-        openKeyboard(true);
+        openKeyboard(mobile);
+        if (!mobile)
+            disableCtl("userEmail", false)
     }
     else {
         createMenu();
         showHelp();
         initTogglePassword();
-        if (location.protocol != "https:")
-            initConfig();
-        else
-            getUserEmail();
+        initConfig();
+        // if (location.protocol != "https:")
+        //     initConfig();
+        // else
+        //     getUserEmail();
         openKeyboard();
         disableInputs(mobile);
     }
@@ -752,10 +756,6 @@ function function6() {
 
 
 function checkEmail(mail) {
-    if (validateEmail(mail))
-        showBlock("divSaveEmail");
-    else
-        hideControl("divSaveEmail");
 }
 function initTogglePassword() {
     const togglePassword = document.getElementById("viewPassword");

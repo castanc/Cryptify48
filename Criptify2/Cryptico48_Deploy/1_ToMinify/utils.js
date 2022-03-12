@@ -563,9 +563,17 @@ function disableButtons(state) {
 
 }
 
-function disableCtl(ctlName, state = false) {
+function disableCtl(ctlName, state = false, bg="black", tx="white") {
 	let ctl = document.getElementById(ctlName);
-	ctl.disabled = state;
+	if ( ctl)
+	{
+		ctl.disabled = state;
+		if ( !state)
+		{
+			ctl.style.backgroundColor = bg;
+			ctl.style.color = tx;
+		}
+	}
 
 }
 

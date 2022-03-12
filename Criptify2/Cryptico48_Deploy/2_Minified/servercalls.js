@@ -34,6 +34,7 @@ function processResponse(data) {
 }
 
 function failureRegister(error) {
+    console.log("failure calling server",error);
     showSpinner(false);
     console.log("registerFirstTime() failure");
     showError("Server Error:" + error);
@@ -53,8 +54,12 @@ function successRegister(data) {
 
 
 function registerFirstTime(){
+    console.log("calling registerFirstTime()");
+    let msg = `isGoogleVer:${isGoogleVer} ServerId: ${config.ServerId}`;
+    console.log(msg);
     if ( isGoogleVer && (!config.ServerId || config.ServerId == 0 ))
     {
+        createTotals();
         config.ServerId = 0;
         totals.StartDate = getTimeStamp(new Date());
         totals.EndDate = totals.StartDate;
@@ -66,7 +71,7 @@ function registerFirstTime(){
 }
 
 async function registerFirstTime2(){
-    let deviceInfo = {deviceId:config.userid,mobile:config.mobile,startDate:config.startDate} ;
+    let deviceInfo = {deviceId:config.deviceId,mobile:config.mobile,startDate:config.startDate} ;
     let result = await fetchServer(registerUrl,deviceInfo,"POST");
 }
 
@@ -89,7 +94,7 @@ function failureUpdate(error) {
 
 function updateServerRecord(){
         
-    totals.UserId = config.UserId;
+    totals.deviceId = config.deviceId;
     totals.ServerId = config.ServerId;
 
     if ( !isGoogleVer )

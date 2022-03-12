@@ -8,8 +8,8 @@ var totals = {};
 
 function createTotals() {
   totals = {};
-  totals.UserId = "xxx";
-  totals.UserEmail = "castanc@gmail.com";
+  totals.UserId = "";
+  totals.UserEmail = "";
   totals.IP = "";
   totals.te = 0;
   totals.td = 0;

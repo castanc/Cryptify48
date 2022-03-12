@@ -1,4 +1,4 @@
-var versionNumber = "4.9.15"; 
+var versionNumber = "4.9.27"; 
 var softwareID = "Crypt.io";
 var environment = "Stage";
 var fileHandle;
@@ -296,13 +296,13 @@ function encryptString(data, userid, password, date = null) {
         date = new Date();
     eo = {};    //encryptObject
     eo.DateCreated = date;
-    eo.UserId = userid;
+    eo.deviceId = deviceId;
     eo.DateExpiry = new Date();
     eo.Version = versionNumber;
     eo.data1 = data;
 
     os = {};
-    os.UserId = userid;
+    os.deviceId = deviceId;
     os.data = "";
     os.data2 = "";
 
@@ -910,7 +910,6 @@ function createConfig() {
     config = {};
     config.FirstUse = new Date();
     config.Version = versionNumber;
-    config.UserId = deviceId;   // makeUserId(10);
     config.LastReportDate = new Date();
     config.showMediaOnOpen = true;
     config.IP = "";
@@ -928,17 +927,33 @@ function createConfig() {
     config.UseGreenKeyboard = mobile;
 }
 
+
 function createTotals() {
     totals = {};
-    totals.UserId = config.UserId;
     totals.StartDate = getTimeStamp(new Date());
     totals.EndDate = totals.StartDate;
     totals.te = 0;
     totals.td = 0;
     totals.teb = 0;
     totals.tdb = 0;
-    //totals.StartDate = config.FirstUse;
-    //totals.EndDate = null;
+    totals.userAgent = navigator.userAgent;
+    totals.protocol = location.protocol;
+    totals.width = window.innerWidth;
+    totals.height = window.innerHeight;
+    if ( mobile )
+        totals.mobile = 1;
+    else
+        totals.mobile = 0;
+    totals.deviceId = deviceId;
+    totals.userEmail = config.UserEmail;
+    try
+    {
+        totals.RAM = navigator.deviceMemory.toString();
+    }
+    catch(ex)
+    {
+        totals.RAM = "Error";
+    }
 }
 
 function sumTotals(op, size) {
@@ -997,7 +1012,7 @@ function initConfig() {
     let obj = null;
     data = localStorage.getItem("data");
     try {
-        if ( data )
+        if (data)
             obj = JSON.parse(data);
     }
     catch (ex) {
@@ -1009,12 +1024,9 @@ function initConfig() {
         createTotals();
         saveTotals();
         saveConfig();
-        downloadDataFile(data,`${config.deviceId}.cry`);
+        downloadDataFile(data, `${config.deviceId}.cry`);
         if (location.protocol == "https:") {
-            if (isGoogleVer)
-                registerFirstTime();
-            else
-                registerFirstTime2();
+            registerFirstTime();
         }
     }
     else {
@@ -1043,6 +1055,15 @@ function initConfig() {
             ctl = document.getElementById("chbZoom");
             ctl.checked = config.FixZoomIssue;
 
+            setField("txDarkMode", darkMode);
+            setField("txFileAPISupported", supported.toString());
+            setField("txCanCopy", canCopy.toString());
+            setField("txUserAgent", navigator.userAgent);
+            setField("txProtocol", location.protocol);
+            setField("txWidth", window.innerWidth);
+            setField("txMobile", mobile);
+            setField("txRAM", navigator.deviceMemory.toString());
+            setField("txUserId", config.UserEmail);
             loadTotals();
         }
         catch (ex) {
@@ -1062,14 +1083,13 @@ function initConfig() {
 }
 
 
-function getSavedUserEmail()
-{
+function getSavedUserEmail() {
     userEmail = localStorage.getItem("user");
-    if ( !userEmail)
+    if (!userEmail) 
         userEmail = "";
-    
-    deviceId = localStorage.getItem("deviceId");
-    if ( !deviceId)
+
+    deviceId = localStorage.getItem("device");
+    if (!deviceId)
         deviceId = makeid(64);
 }
 
@@ -1079,10 +1099,10 @@ function saveConfig() {
         let result = sjcl.encrypt(userEmail, JSON.stringify(config));
         localStorage.setItem("data", result);
         localStorage.setItem("user", userEmail);
-        localStorage.setItem("deviceId", deviceId);
-        setField("txUserId",userEmail);
+        localStorage.setItem("device", deviceId);
+        setField("txUserId", userEmail);
     }
-    else 
+    else
         localStorage.removeItem("data");
 
 }
@@ -2257,9 +2277,17 @@ function disableButtons(state) {
 
 }
 
-function disableCtl(ctlName, state = false) {
+function disableCtl(ctlName, state = false, bg="black", tx="white") {
 	let ctl = document.getElementById(ctlName);
-	ctl.disabled = state;
+	if ( ctl)
+	{
+		ctl.disabled = state;
+		if ( !state)
+		{
+			ctl.style.backgroundColor = bg;
+			ctl.style.color = tx;
+		}
+	}
 
 }
 
@@ -3197,6 +3225,7 @@ function processResponse(data) {
 }
 
 function failureRegister(error) {
+    console.log("failure calling server",error);
     showSpinner(false);
     console.log("registerFirstTime() failure");
     showError("Server Error:" + error);
@@ -3216,8 +3245,12 @@ function successRegister(data) {
 
 
 function registerFirstTime(){
+    console.log("calling registerFirstTime()");
+    let msg = `isGoogleVer:${isGoogleVer} ServerId: ${config.ServerId}`;
+    console.log(msg);
     if ( isGoogleVer && (!config.ServerId || config.ServerId == 0 ))
     {
+        createTotals();
         config.ServerId = 0;
         totals.StartDate = getTimeStamp(new Date());
         totals.EndDate = totals.StartDate;
@@ -3229,7 +3262,7 @@ function registerFirstTime(){
 }
 
 async function registerFirstTime2(){
-    let deviceInfo = {deviceId:config.userid,mobile:config.mobile,startDate:config.startDate} ;
+    let deviceInfo = {deviceId:config.deviceId,mobile:config.mobile,startDate:config.startDate} ;
     let result = await fetchServer(registerUrl,deviceInfo,"POST");
 }
 
@@ -3252,7 +3285,7 @@ function failureUpdate(error) {
 
 function updateServerRecord(){
         
-    totals.UserId = config.UserId;
+    totals.deviceId = config.deviceId;
     totals.ServerId = config.ServerId;
 
     if ( !isGoogleVer )
@@ -3284,22 +3317,6 @@ function createMenu(step="start") {
 
     console.log("createMenu()");
   let menuMobile = "";
-
-  if ( step == "user")
-  {
-    menuMobile = `<div id="divSaveEmail" class="text-center" style="display: none">
-    <button class="btn btn-secondary separation-btn-right">
-      <i class="fa fa-save" title="Download" id="iconSaveUser"  style="cursor: pointer;"
-        onclick="saveEmail(this.value)"></i>
-        </button>
-    </div>
-`;
-
-let div = document.getElementById("iconMenu");
-div.innerHTML = menuMobile;
-showBlock("iconMenu");
-return;
-}
 
   menuMobile = `
     <div id="icons" class="separation-menu row card2 text-center">
@@ -3780,6 +3797,24 @@ function disableInputs(val = true) {
     disableCtl("inputText", val);
     disableCtl("userPassword", val);
     disableCtl("pwdHint", val);
+    disableCtl("txUserId", val);
+    disableCtl("txDarkMode", val);
+    disableCtl("txFileAPISupported", val);
+    disableCtl("txCanCopy", val);
+    disableCtl("txProtocol", val);
+    disableCtl("txWidth", val);
+    disableCtl("txRAM", val);
+    disableCtl("txMobile", val);
+    disableCtl("txUserAgent", val);
+    
+    // txMinPwdLen
+    // txGenPwdLen
+    // chbShowMedia
+    // chbSendInstructions
+    // chbSendLink
+    // chbCopy
+    // chbZoom
+
 }
 
 
@@ -4361,27 +4396,6 @@ function doReadFile(evt) {
 }
 
 
-function saveEmail(email) {
-    event.preventDefault();
-    if (!email || email.length == 0)
-        email = getField("userEmail");
-
-    if (validateEmail(email)) {
-        userEmail = email;
-        config.UserEmail = email;
-        setField("txUserId", email);
-        saveConfig();
-        createMenu();
-        initTogglePassword();
-        hideControl("divUSER");
-        showHelp();
-        showBlock("PAGE1");
-        openKeyboard();
-        disableInputs(mobile);
-
-    }
-    else showError("invalid Email");
-}
 
 
 
@@ -4448,6 +4462,31 @@ function hideSysInfo() {
     hideControl("sysInfo");
 }
 
+
+function saveEmail(email) {
+    event.preventDefault();
+    if (!email || email.length == 0)
+        email = getField("userEmail");
+
+    if (validateEmail(email)) {
+        userEmail = email;
+        createConfig();
+        saveConfig();
+        initConfig();
+        if (location.protocol == "https:")
+            registerFirstTime();
+        createMenu();
+        initTogglePassword();
+        hideControl("divUSER");
+        showHelp();
+        showBlock("PAGE1");
+        openKeyboard();
+        disableInputs(mobile);
+    }
+    else showError("invalid Email");
+}
+
+
 function function6() {
     window.onerror = function (msg, url, line) {
         showError(`${msg}</br>${url}</br>Line:${line}`);
@@ -4459,15 +4498,6 @@ function function6() {
     mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
     getIsDesktop();
 
-    setField("txDarkMode", darkMode);
-    setField("txFileAPISupported", supported.toString());
-    setField("txCanCopy", canCopy.toString());
-    setField("txUserAgent", navigator.userAgent);
-    setField("txProtocol", location.protocol);
-    setField("txWidth", window.innerWidth);
-    setField("txMobile", mobile);
-    setField("txRAM", navigator.deviceMemory.toString());
-    setField("txUserId", config.UserEmail);
     maxData = navigator.deviceMemory * 1024 * 1024 * 3;
 
 
@@ -4509,24 +4539,33 @@ function function6() {
     if (mobile)
         config.UseGreenKeyboard = true;
 
-        //start********************************************************************************
+    //start********************************************************************************
+
+    localStorage.removeItem("data");
+    localStorage.removeItem("user");
+    localStorage.removeItem("device");
+    isGoogleVer = true;
+    console.log("isGoogleVersion:", isGoogleVer);
+
     getSavedUserEmail();
     if (userEmail.length == 0) {
-        createMenu("user");
         hideControl("PAGE1");
         showBlock("divUSER");
         showMessage("Please provide an email address. ( No password required).")
         setCurrentField("userEmail");
-        openKeyboard(true);
+        openKeyboard(mobile);
+        if (!mobile)
+            disableCtl("userEmail", false)
     }
     else {
         createMenu();
         showHelp();
         initTogglePassword();
-        if (location.protocol != "https:")
-            initConfig();
-        else
-            getUserEmail();
+        initConfig();
+        // if (location.protocol != "https:")
+        //     initConfig();
+        // else
+        //     getUserEmail();
         openKeyboard();
         disableInputs(mobile);
     }
@@ -4535,10 +4574,6 @@ function function6() {
 
 
 function checkEmail(mail) {
-    if (validateEmail(mail))
-        showBlock("divSaveEmail");
-    else
-        hideControl("divSaveEmail");
 }
 function initTogglePassword() {
     const togglePassword = document.getElementById("viewPassword");

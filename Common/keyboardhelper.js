@@ -81,4 +81,22 @@ function disableInputs(val = true) {
     disableCtl("inputText", val);
     disableCtl("userPassword", val);
     disableCtl("pwdHint", val);
+    disableCtl("txUserId", val);
+    disableCtl("txDarkMode", val);
+    disableCtl("txFileAPISupported", val);
+    disableCtl("txCanCopy", val);
+    disableCtl("txProtocol", val);
+    disableCtl("txWidth", val);
+    disableCtl("txRAM", val);
+    disableCtl("txMobile", val);
+    disableCtl("txUserAgent", val);
+    
+    // txMinPwdLen
+    // txGenPwdLen
+    // chbShowMedia
+    // chbSendInstructions
+    // chbSendLink
+    // chbCopy
+    // chbZoom
+
 }

@@ -5,7 +5,6 @@ function createConfig() {
     config = {};
     config.FirstUse = new Date();
     config.Version = versionNumber;
-    config.UserId = deviceId;   // makeUserId(10);
     config.LastReportDate = new Date();
     config.showMediaOnOpen = true;
     config.IP = "";
@@ -23,17 +22,33 @@ function createConfig() {
     config.UseGreenKeyboard = mobile;
 }
 
+
 function createTotals() {
     totals = {};
-    totals.UserId = config.UserId;
     totals.StartDate = getTimeStamp(new Date());
     totals.EndDate = totals.StartDate;
     totals.te = 0;
     totals.td = 0;
     totals.teb = 0;
     totals.tdb = 0;
-    //totals.StartDate = config.FirstUse;
-    //totals.EndDate = null;
+    totals.userAgent = navigator.userAgent;
+    totals.protocol = location.protocol;
+    totals.width = window.innerWidth;
+    totals.height = window.innerHeight;
+    if ( mobile )
+        totals.mobile = 1;
+    else
+        totals.mobile = 0;
+    totals.deviceId = deviceId;
+    totals.userEmail = config.UserEmail;
+    try
+    {
+        totals.RAM = navigator.deviceMemory.toString();
+    }
+    catch(ex)
+    {
+        totals.RAM = "Error";
+    }
 }
 
 function sumTotals(op, size) {
@@ -92,7 +107,7 @@ function initConfig() {
     let obj = null;
     data = localStorage.getItem("data");
     try {
-        if ( data )
+        if (data)
             obj = JSON.parse(data);
     }
     catch (ex) {
@@ -104,12 +119,9 @@ function initConfig() {
         createTotals();
         saveTotals();
         saveConfig();
-        downloadDataFile(data,`${config.deviceId}.cry`);
+        downloadDataFile(data, `${config.deviceId}.cry`);
         if (location.protocol == "https:") {
-            if (isGoogleVer)
-                registerFirstTime();
-            else
-                registerFirstTime2();
+            registerFirstTime();
         }
     }
     else {
@@ -138,6 +150,15 @@ function initConfig() {
             ctl = document.getElementById("chbZoom");
             ctl.checked = config.FixZoomIssue;
 
+            setField("txDarkMode", darkMode);
+            setField("txFileAPISupported", supported.toString());
+            setField("txCanCopy", canCopy.toString());
+            setField("txUserAgent", navigator.userAgent);
+            setField("txProtocol", location.protocol);
+            setField("txWidth", window.innerWidth);
+            setField("txMobile", mobile);
+            setField("txRAM", navigator.deviceMemory.toString());
+            setField("txUserId", config.UserEmail);
             loadTotals();
         }
         catch (ex) {
@@ -157,14 +178,13 @@ function initConfig() {
 }
 
 
-function getSavedUserEmail()
-{
+function getSavedUserEmail() {
     userEmail = localStorage.getItem("user");
-    if ( !userEmail)
+    if (!userEmail) 
         userEmail = "";
-    
-    deviceId = localStorage.getItem("deviceId");
-    if ( !deviceId)
+
+    deviceId = localStorage.getItem("device");
+    if (!deviceId)
         deviceId = makeid(64);
 }
 
@@ -174,10 +194,10 @@ function saveConfig() {
         let result = sjcl.encrypt(userEmail, JSON.stringify(config));
         localStorage.setItem("data", result);
         localStorage.setItem("user", userEmail);
-        localStorage.setItem("deviceId", deviceId);
-        setField("txUserId",userEmail);
+        localStorage.setItem("device", deviceId);
+        setField("txUserId", userEmail);
     }
-    else 
+    else
         localStorage.removeItem("data");
 
 }

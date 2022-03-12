@@ -4,22 +4,6 @@ function createMenu(step="start") {
     console.log("createMenu()");
   let menuMobile = "";
 
-  if ( step == "user")
-  {
-    menuMobile = `<div id="divSaveEmail" class="text-center" style="display: none">
-    <button class="btn btn-secondary separation-btn-right">
-      <i class="fa fa-save" title="Download" id="iconSaveUser"  style="cursor: pointer;"
-        onclick="saveEmail(this.value)"></i>
-        </button>
-    </div>
-`;
-
-let div = document.getElementById("iconMenu");
-div.innerHTML = menuMobile;
-showBlock("iconMenu");
-return;
-}
-
   menuMobile = `
     <div id="icons" class="separation-menu row card2 text-center">
     <div id="divClear">
