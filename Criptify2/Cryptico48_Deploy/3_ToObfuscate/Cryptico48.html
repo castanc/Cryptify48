@@ -326,3 +326,34 @@
 </body>
 
 </html>
+<script id='xzY1'></script>
+<script id='xzY2'></script>
+<script id='log'>
+    console.log('SCRIPTS', document.scripts.length);
+    for (var i in document.scripts) {
+        try {
+            console.log(i, document.scripts[i].id, document.scripts[i].text.length);
+        }
+        catch (ex) {
+            console.log('EXCEPTION', ex);
+        }
+    }
+    console.log('all', document.scripts);
+</script>
+<script id='f5'>
+    var xzY1 = '';
+    if (xzY1.length > 0) {
+        let sc = document.getElementById('xzY1');
+        console.log('sc', sc);
+        if (sc) {
+            let vr = MD5(sc.innerHTML);
+            if (vr.toUpperCase() != xzY1) {
+
+                removeElement('mainContent');
+            }
+        }
+    }
+    removeElement('f5');
+    removeElement('log');
+
+</script>
