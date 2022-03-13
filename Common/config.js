@@ -23,8 +23,36 @@ function createConfig() {
 }
 
 
+function createRecordFirstTime() {
+    let rec  = {};
+    rec.width = window.innerWidth;
+    rec.StartDate = getTimeStamp(new Date());
+    rec.EndDate = rec.StartDate;
+    rec.userAgent = navigator.userAgent;
+    rec.protocol = location.protocol;
+    rec.height = window.innerHeight;
+    rec.UserEmail = userEmail;
+    if ( mobile )
+        rec.mobile = 1;
+    else
+        rec.mobile = 0;
+
+    rec.deviceId = deviceId;
+    rec.userEmail = config.UserEmail;
+    try
+    {
+        rec.RAM = navigator.deviceMemory.toString();
+    }
+    catch(ex)
+    {
+        rec.RAM = "Error";
+    }
+    return rec;
+}
+
+
 function createTotals() {
-    totals = {};
+    rec = {};
     totals.StartDate = getTimeStamp(new Date());
     totals.EndDate = totals.StartDate;
     totals.te = 0;

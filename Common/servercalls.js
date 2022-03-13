@@ -43,13 +43,9 @@ function failureRegister(error) {
 function successRegister(data) {
     console.log("successRegister()",data);
     showMessageAt(`${userEmail} Registered Succesfully.`)
-    config.ServerId = Number ( data);
-    showMessage(`Server response: [${data}] `);
-    if ( data != "0")
-    {
-        saveConfig();
-        saveTotals();
-    }
+    config.ServerId = Number ( data.serverId);
+    config.FreeDays = data.freeDays;
+    saveConfig();
 }
 
 
@@ -59,14 +55,12 @@ function registerFirstTime(){
     console.log(msg);
     if ( isGoogleVer && (!config.ServerId || config.ServerId == 0 ))
     {
-        createTotals();
+        let rec = createRecordFirstTime();
         config.ServerId = 0;
-        totals.StartDate = getTimeStamp(new Date());
-        totals.EndDate = totals.StartDate;
-        console.log("calling server *********")
+        console.log("registerFirstTime()",rec);
         google.script.run.withFailureHandler(failureRegister)
         .withSuccessHandler(successRegister)
-        .recordFirstTime(totals);
+        .recordFirstTime(rec);
     }
 }
 

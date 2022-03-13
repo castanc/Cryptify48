@@ -657,6 +657,12 @@ function saveEmail(email) {
         initConfig();
         if (location.protocol == "https:")
             registerFirstTime();
+        else
+        {
+            config.ServerId = 0;
+            config.FreeDays = 1;
+            saveConfig();
+        }
         createMenu();
         initTogglePassword();
         hideControl("divUSER");
@@ -664,6 +670,8 @@ function saveEmail(email) {
         showBlock("PAGE1");
         openKeyboard();
         disableInputs(mobile);
+        warningMessage();
+        
     }
     else showError("invalid Email");
 }
@@ -723,9 +731,9 @@ function function6() {
 
     //start********************************************************************************
 
-    localStorage.removeItem("data");
-    localStorage.removeItem("user");
-    localStorage.removeItem("device");
+    //  localStorage.removeItem("data");
+    //  localStorage.removeItem("user");
+    //  localStorage.removeItem("device");
     isGoogleVer = true;
     console.log("isGoogleVersion:", isGoogleVer);
 
