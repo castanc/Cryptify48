@@ -190,7 +190,7 @@ function doEncryptNew() {
                 showBlock("divShare");
                 hideControl("divNext");
                 hideControl("divViewPassword");
-                KeyboardEvent.close();
+                Keyboard.close();
         
                 sumTotals("E",data.length);
                 if (usingFile)

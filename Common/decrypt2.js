@@ -88,7 +88,7 @@ function doDecryptNew() {
             hideControl("divErase");
             //hideControl("divView");
             hideControl("divViewPassword");
-            KeyboardEvent.close();
+            Keyboard.close();
     
 
             //todo update selFile with decrypted file info

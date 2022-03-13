@@ -753,9 +753,9 @@ function function6() {
 
     //start********************************************************************************
 
-    //  localStorage.removeItem("data");
-    //  localStorage.removeItem("user");
-    //  localStorage.removeItem("device");
+    // localStorage.removeItem("data");
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("device");
     isGoogleVer = true;
     console.log("isGoogleVersion:", isGoogleVer);
 
