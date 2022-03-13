@@ -85,6 +85,9 @@ function setCurrentField(cField) {
     x.style.color = "black";
     Keyboard.properties.value = x.value;
 
+    if ( (mobile || config.UseGreenKeyboard) && !Keyboard.properties.isOpen && !mediaOpen )
+        Keyboard.open();
+
     let dbgMsg = `setCurrentField(${cField}) [${Keyboard.properties.value}]`;
     console.log(dbgMsg);
 }

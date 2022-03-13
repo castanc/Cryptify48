@@ -17,7 +17,7 @@ function createMenu(step="start") {
 
     <div id="divInfo">
     <button class="btn btn-secondary separation-btn-right">
-      <i class="fas fa-info-circle" title="System Info" id="clearText"
+      <i class="fas fa-info-circle" title="System Info" id="info"
          style="cursor: pointer;" onclick="toggleSysInfo()"></i>
          </button>
     </div>
@@ -50,7 +50,7 @@ function createMenu(step="start") {
 
     <div id="divOpenFile" class="text-center">
     <button class="btn btn-secondary separation-btn-right">
-      <i class="fas fa-folder-open" title="Open File" id="clearText"  style="cursor: pointer;"
+      <i class="fas fa-folder-open" title="Open File" id="openFile"  style="cursor: pointer;"
         onclick="openImageFile()"></i>
         </button>
     </div>
@@ -58,7 +58,7 @@ function createMenu(step="start") {
 
     <div id="divEncrypt" class="text-center" style="display:none">
     <button class="btn btn-secondary separation-btn-right">
-      <i class="fas fa-user-secret" title="Encrypt" id="clearText"  style="cursor: pointer;"
+      <i class="fas fa-user-secret" title="Encrypt" id="decrypt"  style="cursor: pointer;"
         onclick="doEncryptNew()"></i>
         </button>
     </div>
@@ -66,7 +66,7 @@ function createMenu(step="start") {
 
     <div id="divDecrypt" class="text-center" style="display:none">
     <button class="btn btn-secondary separation-btn-right">
-          <i class="fa fa-unlock" title="Encrypt" id="clearText"  style="cursor: pointer;"
+          <i class="fa fa-unlock" title="Encrypt" id="decrypt"  style="cursor: pointer;"
         onclick="doDecryptNew()"></i>
         </button>
     </div>
@@ -80,18 +80,20 @@ function createMenu(step="start") {
 
 
 
-    <div id="divView" class="text-center" style="display:none">
-    <button class="btn btn-secondary separation-btn-right">
-      <i class="far fa-eye" title="View Media" id="viewMedia"  style="cursor: pointer;"
-        onclick="toggleMedia()"></i>
-        </button>
-    </div>
 
 
     <div id="divViewPassword" class="text-center" style="display:none">
     <button class="btn btn-secondary separation-btn-right red">
-      <i class="far fa-eye" title="View Media" id="viewPassword"  style="cursor: pointer";
+      <i class="far fa-eye" title="View Password" id="viewPassword"  style="cursor: pointer";
       ></i>
+        </button>
+    </div>
+
+
+    <div id="divView" class="text-center" style="display:none">
+    <button class="btn btn-secondary separation-btn-right">
+      <i class="far fa-eye" title="View Media" id="viewMedia"  style="cursor: pointer;"
+        onclick="toggleMedia()"></i>
         </button>
     </div>
 

@@ -108,7 +108,7 @@ function showVideo() {
 		writeInnerHTML("divVideo", html);
 		showBlock("divVideo");
 		showBlock("divMedia");
-		showBlock("divView");
+		//showBlock("divView");
 		mediaOpen = true;
 		iconHtml = `<i class="fas fa-image icon-size2" title="Open Binary File: Image,PDF,Excel,Word,Audio" id="clearText" style="margin-left: -30px; cursor: pointer;"
 	onclick="toggleMedia()"></i>`;
@@ -131,7 +131,7 @@ function showVideo() {
 			writeInnerHTML("divAudio", setHtml());
 			showBlock("divAudio");
 			showBlock("divMedia");
-			showBlock("divView");
+			//showBlock("divView");
 
 			mediaOpen = true;
 		}
@@ -188,9 +188,9 @@ function showData() {
 	hideControl("divText");
 	hideControl("divInputPDF");
 	hideControl("divInfo");
-	hideControl("divHide");
+	//hideControl("divHide");
 	hideControl("divSettings");
-	hideControl("divView");
+	//hideControl("divView");
 
 	mediaOpen = false;
 
@@ -217,9 +217,15 @@ function showData() {
 	showBlock("divHide");
 	toggleCanProcess(canProcess, fileSizeText);
 	if (encryptionDone || decryptionDone)
+	{
 		hideControl("divNext");
+		hideControl("divViewPassword");
+	}
 	else
+	{
 		showBlock("divNext");
+		//showBlock("divViewPassword");
+	}
 
 	hideControl("divShare");
 }
@@ -271,7 +277,7 @@ function showText() {
 	showPasswordMessage();
 	showBlock("divText");
 	showBlock("divMedia");
-	showBlock("divHide");
+	//showBlock("divHide");
 	mediaOpen = true;
 }
 
@@ -288,8 +294,8 @@ function showNoVisor() {
 	setField("loadedText", data);
 	showBlock("divText");
 	showBlock("divMedia");
-	showBlock("divView");
-	showBlock("divHide");
+	//showBlock("divView");
+	//showBlock("divHide");
 
 	mediaOpen = true;
 	if (encryptedFile) {

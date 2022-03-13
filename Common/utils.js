@@ -754,11 +754,14 @@ function textToBlob(text) {
 
 async function openImageFile() {
 	event.preventDefault();
+	clear();
 	hideControl("divHelp");
 	showMessage("");
 	hideControl("divInfo");
 	hideControl("divSetttings");
 	hideControl("divPaste");
+	hideControl("divView");
+	hideControl("divHide");
 	hideTitle();
 	initialIcons = false;
 	disableInputs(mobile);
@@ -770,7 +773,6 @@ async function openImageFile() {
 	if (sysInfoOpen)
 		toggleSysInfo();
 
-	clear();
 	hideControl("bigFile");
 	hideControl("divInputText");
 	fileMode = "Binary";

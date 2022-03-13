@@ -202,7 +202,8 @@ function handleFileSelect(evt) {
           data = e.target.result;
           showSpinner(false);
           usingFile = true;
-          showData();
+          if ( config.showMediaOnOpen)
+            showData();
         }
 
         let fSize = getSizeText(selFile.readSize);

@@ -184,9 +184,13 @@ function doEncryptNew() {
                 hideControl("divEncrypt");
                 hideControl("divDecrypt");
                 hideControl("divInputText");
-                showBlock("divHide");
+                hideControl("divErase");
+                //showBlock("divHide");
                 hideControl("divFileInfo");
                 showBlock("divShare");
+                hideControl("divNext");
+                hideControl("divViewPassword");
+        
                 sumTotals("E",data.length);
                 if (usingFile)
                 {
@@ -201,7 +205,7 @@ function doEncryptNew() {
                     showMedia("divText");
                     showBlock("divPaste");
                     showBlock("divOpenFile");
-                    showBlock("divHide");
+                    //showBlock("divHide");
                     showMessage(`${encryptIcon} OK. Copied to clipboard. ${shareIcon} to Share.`, statusSuccess);
                 }
                 hideControl("divNext");

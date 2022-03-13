@@ -162,6 +162,9 @@ function selectPaste() {
     hideControl("divInfo");
     hideControl("divSetttings");
     hideControl("divOpenFile");
+    hideControl("divView");
+	hideControl("divHide");
+
     Keyboard.close();
     initialIcons = false;
     handleSysIcons();
@@ -265,9 +268,10 @@ function finishPage() {
 
 function hideInitialIcons()
 {
-    if ( initialIcons)
+    showMessage("");
+    showBlock("divErase");
+    //if ( initialIcons)
     {
-        showMessage("");
         hideControl("divInfo");
         hideControl("divSetttings");
         hideControl("divPaste");
@@ -275,12 +279,6 @@ function hideInitialIcons()
         hideTitle();
         initialIcons = false;
     }
-}
-
-function firstData() {
-    showBlock("divErase");
-    hideInitialIcons();
-
 }
 
 function performEncrypt() {
@@ -417,8 +415,8 @@ function setIconsStateInitial() {
 
     hideControl("divMedia");
     hideControl("PAGE2");
-    hideControl("divView");
-    hideControl("divHide");
+    //hideControl("divView");
+    //hideControl("divHide");
     showBlock("divPaste");
 }
 
@@ -507,16 +505,21 @@ function clear() {
     showBlock("divInputText");
     showBlock("divPaste");
     showBlock("divOpenFile");
+
     hideControl("divInputPDF");
     hideControl("divFileInfo");
     hideControl("divDownload");
     hideControl("divDownload2");
     hideControl("divErase");
+    hideControl("divViewPassword");
+    hideControl("divHide");
+    hideControl("divView");
+
     showBlock("result");
     showTitle();
 
-    hideControl("divView");
-    hideControl("divHide");
+    //hideControl("divView");
+    //hideControl("divHide");
     hideControl("divViewPassword");
     gotoPage(1);
     currentField = "inputText";
@@ -796,10 +799,27 @@ function initTogglePassword() {
         // toggle the eye slash icon
         this.classList.toggle('fa-eye-slash');
     });
-
-
-
 }
+
+
+function initToggleMedia() {
+    let togglePassword2 = document.getElementById("divHide");
+
+    togglePassword2.addEventListener('click', function (e) {
+        // toggle the type attribute
+        //e.preventDefault();
+        event.preventDefault();
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye');
+        if ( mediaOpen)
+            showBlock("divMedia");
+        else
+            hideControl("divMedia");
+
+        mediaOpen = !mediaOpen;
+    });
+}
+
 
 function createMenuNavBar(genAddUpdate = false, icons = false) {
     //todo: causes infine recursion

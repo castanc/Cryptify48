@@ -85,7 +85,10 @@ function doDecryptNew() {
             showBlock("divDownload");
             hideControl("divShare");
             hideControl("divNext");
-            hideControl("divView");
+            hideControl("divErase");
+            //hideControl("divView");
+            hideControl("divViewPassword");
+    
 
             //todo update selFile with decrypted file info
             selFile.size = data.length;
@@ -113,9 +116,9 @@ function doDecryptNew() {
             {
                 //showMedia();
                 showMessage(`${decryptIcon}OK. ${saveIcon}To Save.`,statusSuccess);
-                showBlock("divHide");
+                //showBlock("divHide");
                 showBlock("divDownload");
-                hideControl("divView");
+                //hideControl("divView");
                 hideControl("divInputPDF");
                 showBlock("divFileInfo");
                 hideControl("divNext");
@@ -125,8 +128,8 @@ function doDecryptNew() {
         }
         else
         {
-            hideControl("divView");
-            hideControl("divHide");
+            //hideControl("divView");
+            //hideControl("divHide");
              showError(lastError);
         }
     }
