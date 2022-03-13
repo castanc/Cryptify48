@@ -1,4 +1,4 @@
-var versionNumber = "4.10.3"; 
+var versionNumber = "4.10.6"; 
 var softwareID = "Crypt.io";
 var environment = "Stage";
 var fileHandle;

@@ -759,6 +759,7 @@ async function openImageFile() {
 	hideControl("divInfo");
 	hideControl("divSetttings");
 	hideControl("divPaste");
+	hideTitle();
 	initialIcons = false;
 	disableInputs(mobile);
 
@@ -1311,6 +1312,10 @@ function showBlock(ctl) {
 
 function showTitle() {
 	writeInnerHTML("divTitle", `<label>Crypt.io ${environment} Version: ${versionNumber}</label>`);
+}
+
+function hideTitle() {
+	writeInnerHTML("divTitle", "");
 }
 
 

@@ -200,8 +200,6 @@ function initConfig() {
             if (location.protocol == "https:")
                 registerFirstTime();
         }
-        showTitle();
-
     }
 }
 

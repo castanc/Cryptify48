@@ -272,6 +272,7 @@ function hideInitialIcons()
         hideControl("divSetttings");
         hideControl("divPaste");
         hideControl("divOpenFile");
+        hideTitle();
         initialIcons = false;
     }
 }

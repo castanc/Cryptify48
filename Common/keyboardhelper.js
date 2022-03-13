@@ -16,8 +16,10 @@ function keyed(k) {
         hideControl("divSettings");
         hideControl("divOpenFile");
         hideControl("divPaste");
+        hideTitle();
         initialIcons = false;
     }
+    showMessage("");
     let x = document.getElementById(currentField);
     let last = k.substr(k.length - 1);
 

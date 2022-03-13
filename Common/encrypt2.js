@@ -163,6 +163,9 @@ data:${os.data}data2:${os.data2}data3:${os.data3}`;
 function doEncryptNew() {
     event.preventDefault();
 
+    if ( data.length == 0 && !usingFile)
+        data = getField("inputText");
+
     if (data.length > 0 && validatePassword()) {
         showSpinner(true,"Encrypting...");
         let dateCreated = new Date();
