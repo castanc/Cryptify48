@@ -10,8 +10,15 @@ function openKeyboard(force = false) {
 }
 
 function keyed(k) {
-    hideControl("divInfo");
-    hideControl("divSettings");
+    if ( Keyboard.properties.isOpen && initialMenuOptions )
+    {
+        showMessage("");
+        hideControl("divInfo");
+        hideControl("divSettings");
+        hideControl("divOpenFile");
+        hideControl("divPaste");
+        initialMenuOptions = false;
+    }
     let x = document.getElementById(currentField);
     let last = k.substr(k.length - 1);
 
@@ -42,6 +49,11 @@ function keyed(k) {
             showBlock("divViewPassword");
         else
             hideControl("divViewPassword");
+
+            if ( k.len)
+        showBlock("divEncrypt");
+        if ( openEncryptedFile)
+            showBlock("divDecrypt");
     }
 
 }

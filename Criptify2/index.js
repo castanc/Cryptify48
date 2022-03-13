@@ -158,7 +158,12 @@ function finishInputText() {
 
 function selectPaste() {
     closeAllAux();
-
+    showMessage("");
+    hideControl("divInfo");
+    hideControl("divSetttings");
+    hideControl("divOpenFile");
+    Keyboard.close();
+    initialIcons = false;
     handleSysIcons();
     reset();
     hideControl("divInputText");
@@ -258,11 +263,22 @@ function finishPage() {
         nextPage();
 }
 
+function hideInitialIcons()
+{
+    if ( initialIcons)
+    {
+        showMessage("");
+        hideControl("divInfo");
+        hideControl("divSetttings");
+        hideControl("divPaste");
+        hideControl("divOpenFile");
+        initialIcons = false;
+    }
+}
+
 function firstData() {
-    console.log("firstData()");
     showBlock("divErase");
-    hideControl("divInfo");
-    hideControl("divSettings");
+    hideInitialIcons();
 
 }
 
@@ -474,6 +490,7 @@ function clear() {
     manualText = false;
     isPDF = false;
     sharingFile = false;
+    initialIcons = true;
 
 
     // setField("inputText", "");
@@ -757,8 +774,8 @@ function function6() {
         // else
         //     getUserEmail();
         openKeyboard();
-        disableInputs(mobile);
     }
+    disableInputs(mobile);
 
 }
 

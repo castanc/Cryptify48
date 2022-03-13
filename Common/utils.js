@@ -755,6 +755,14 @@ function textToBlob(text) {
 async function openImageFile() {
 	event.preventDefault();
 	hideControl("divHelp");
+	showMessage("");
+	hideControl("divInfo");
+	hideControl("divSetttings");
+	hideControl("divPaste");
+	initialIcons = false;
+	disableInputs(mobile);
+
+	
 	if (settingsOpen)
 		toggleSettings();
 

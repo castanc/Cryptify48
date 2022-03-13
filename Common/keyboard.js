@@ -30,7 +30,8 @@ const Keyboard = {
         capsLock: false,
         tilde: false,
         acute: false,
-        currentKeyElement: null
+        currentKeyElement: null,
+        isOpen: false
     },
 
     init() {
@@ -227,6 +228,7 @@ const Keyboard = {
         this.eventHandlers.oninput = oninput;
         this.eventHandlers.onclose = onclose;
         this.elements.main.classList.remove("keyboard--hidden");
+        this.properties.isOpen = true;
     },
 
     close() {
@@ -234,6 +236,7 @@ const Keyboard = {
         this.eventHandlers.oninput = oninput;
         this.eventHandlers.onclose = onclose;
         this.elements.main.classList.add("keyboard--hidden");
+        this.properties.isOpen = false;
     }
 };
 
