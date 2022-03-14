@@ -158,9 +158,12 @@ textarea:disabled {
 }
 
 .icon-size {
-    font-size: 0.6em;
+    font-size: 0.75em;
 }
 
+.key-size {
+    font-size: 1.2em;
+}
 
 .icon-size2 {
     font-size: 3em;

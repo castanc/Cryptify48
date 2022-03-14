@@ -42,14 +42,14 @@ function showFileInfo() {
 
 	}
 	else {
-		let sourceText = "Manual Text.";
+		let sourceText = "";	//"Manual Text.";
 		if (dataFromClipboard)
 			sourceText = "Clipbaord Text."
 
 		if (isEncrypted.length > 0)
 			fInfoRow = `${sourceText} (${data.length} bytes), <i class="red">${isEncrypted}</i>`;
 		else
-			fInfoRow = `${sourceText} (${data.length}bytes.)`;
+			fInfoRow = ""; //`${sourceText} (${data.length}bytes.)`;
 	}
 	showInfoAt("divFileInfo", fInfoRow);
 	showBlock("divFileInfo");

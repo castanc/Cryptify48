@@ -107,9 +107,8 @@ function nextPage() {
     currentSection = `PAGE${page}`;
     hideControl(currentSection);
     page++;
-    if (page > totalPages)
-    {
-        if ( !usingFile)
+    if (page > totalPages) {
+        if (!usingFile)
             page = 1;
         else page = 2;
     }
@@ -167,7 +166,7 @@ function selectPaste() {
     hideControl("divSetttings");
     hideControl("divOpenFile");
     hideControl("divView");
-	hideControl("divHide");
+    hideControl("divHide");
 
     Keyboard.close();
     initialIcons = false;
@@ -270,8 +269,7 @@ function finishPage() {
         nextPage();
 }
 
-function hideInitialIcons()
-{
+function hideInitialIcons() {
     showMessage("");
     showBlock("divErase");
     //if ( initialIcons)
@@ -308,33 +306,56 @@ function handleSysIcons() {
 }
 
 function showPasswordMessage() {
-    let pwd = getPassword();
-    if (pwd.length < config.MinPwdLen) {
-        hideControl("divMedia");
-        hideControl("divInputText");
-        gotoPage(2);
-        showWarning("Optional <i>Password Hint</i>, <b>Password. (*Required)</b>", statusWarning);
-        setFocus("userPassword");
+    if (config.ShowHelp) {
+        let pwd = getPassword();
+        if (pwd.length < config.MinPwdLen) {
+            hideControl("divMedia");
+            hideControl("divInputText");
+            gotoPage(2);
+            showWarning("<b>Password. (*Required)</b>", statusWarning);
+            setFocus("userPassword");
+        }
     }
 }
 
+function showHintMessage()
+{
+    
+    if (config.ShowHelp) {
+        let pwd = getPassword();
+        if (pwd.length < config.MinPwdLen) {
+            hideControl("divMedia");
+            hideControl("divInputText");
+            gotoPage(2);
+            showWarning("Optional <i>Password Hint</i>,", statusWarning);
+            setFocus("userPassword");
+        }
+    }
+
+}
+
+
+
 function warningMessage() {
 
-    let msg = `Type or ${pasteIcon} Paste Text, or ${folderIcon} Open a File.`;
-    if (!data)
-        data = "";
-    if (data.length == 0) {
-        showWarning(msg)
+    if (config.ShowHelp) {
+        let msg = `Type or ${pasteIcon} Paste Text, or ${folderIcon} Open a File.`;
+        if (!data)
+            data = "";
+        if (data.length == 0) {
+            showWarning(msg)
+        }
     }
 
 }
 
 function togglePage() {
     showMessage("");
+    hideControl("divViewPassword");
     if (page == 1) {
         warningMessage();
         setCurrentField("inputText");
-        if (usingFile) 
+        if (usingFile)
             hideControl("divInputText");
     }
     else if (page == 2) {
@@ -344,8 +365,10 @@ function togglePage() {
             showWarning("Optional <i>Password Hint</i>, <b>Password. (*Required)</b>", statusWarning);
             setFocus("userPassword");
         }
+        else if (pwd.length >= config.MinPwdLen)
+            showBlock("divViewPassword");
     }
-    else if ( page == 3 )
+    else if (page == 3)
         setCurrentField("pwdHint");
 
     //if (encryptedFile || manualText || dataFromClipboard)
@@ -354,13 +377,12 @@ function togglePage() {
     // if (manualText || dataFromClipboard)
     //     showMedia("divText");
 
-    if ( mediaOpen )
-    {
+    if (mediaOpen) {
         showBlock("divMedia");
         showBlock("divHide");
     }
 
-    if (mobile || config.UseGreenKeyboard )
+    if (mobile || config.UseGreenKeyboard)
         openKeyboard();
 
 }
@@ -432,6 +454,7 @@ function doClear() {
 
 function closeHelp() {
     hideControl("divHelp");
+    openKeyboard();
 }
 
 function showHelp() {
@@ -459,6 +482,7 @@ ${nextIcon} Next page</br>
     }
     else hideControl("divHelp");
 
+    Keyboard.close();
 }
 
 function clear() {
@@ -515,6 +539,7 @@ function clear() {
     hideControl("divViewPassword");
     hideControl("divHide");
     hideControl("divView");
+    hideControl("divMedia");
 
     showBlock("result");
     showTitle();
@@ -607,8 +632,10 @@ function toggleSysInfo() {
     event.preventDefault();
 
     hideControl("divHelp");
-    if (settingsOpen)
+    Keyboard.close();
+    if (settingsOpen) {
         toggleSettings();
+    }
 
     sysInfoOpen = !sysInfoOpen;
     if (sysInfoOpen) {
@@ -623,6 +650,7 @@ function toggleSysInfo() {
         showInfo("");
         hideControl("divSysInfo");
         gotoPage(1);
+        openKeyboard();
     }
 }
 
@@ -631,6 +659,7 @@ function toggleSettings() {
     event.preventDefault();
     hideControl("divHelp");
     settingsOpen = !settingsOpen;
+    Keyboard.close();
     if (settingsOpen) {
         currentSection = "divSysSettings";
         hideControl("PAGE1");
@@ -646,7 +675,7 @@ function toggleSettings() {
             gotoPage(1);
             showInfo("Settings updated.");
         }
-
+        openKeyboard();
     }
 }
 
@@ -679,8 +708,7 @@ function saveEmail(email) {
         initConfig();
         if (location.protocol == "https:")
             registerFirstTime();
-        else
-        {
+        else {
             config.ServerId = 0;
             config.FreeDays = 1;
             saveConfig();
@@ -693,7 +721,7 @@ function saveEmail(email) {
         openKeyboard();
         disableInputs(mobile);
         warningMessage();
-        
+
     }
     else showError("invalid Email");
 }
@@ -812,7 +840,7 @@ function initToggleMedia() {
         event.preventDefault();
         // toggle the eye slash icon
         this.classList.toggle('fa-eye');
-        if ( mediaOpen)
+        if (mediaOpen)
             showBlock("divMedia");
         else
             hideControl("divMedia");

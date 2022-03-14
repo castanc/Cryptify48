@@ -6,8 +6,8 @@ const Keyboard = {
     },
 
     shiftKeys: {
-        original: "1234567890,.?'[]",
-        shifted: "!~#$%^&*();:/\"{}"
+        original: "1234567890,.?'()",
+        shifted: "!~#$%^&*[];:/\"{}"
     },
 
 
@@ -38,6 +38,7 @@ const Keyboard = {
         // Create main elements
         this.elements.main = document.createElement("div");
         this.elements.keysContainer = document.createElement("div");
+        this.elements.keysContainer.classList.add("key-size");
 
         // Setup main elements
         this.elements.main.classList.add("keyboard", "keyboard--hidden");
@@ -67,7 +68,7 @@ const Keyboard = {
             "'","q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
             "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
             "done", "z", "x", "c", "v", "b", "n", "m",",", ".", "?",
-            "@","[","]","space", "acute" 
+            "@","(",")","space", "acute" 
         ];
 
         // Creates HTML for an icon
@@ -143,6 +144,8 @@ const Keyboard = {
                             nextPage();
                             setCurrentField("pwdHint");
                         }
+                        else if ( currentField== "userEmail")
+                            saveEmail();
                         else {
                             this.properties.value += "\n";
                             this._triggerEvent("oninput");

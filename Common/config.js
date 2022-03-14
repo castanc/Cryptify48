@@ -102,10 +102,10 @@ function updateTotals() {
     let hours = ms / (1000 * 3600);
     let days = ms / (1000 * 3600 * 24);
     console.log("diff:", ms);
-    if (isGoogleVer && hours > checkHours && location.protocol == "https:") {
-        console.log("calling updateServerRecord()");
-        updateServerRecord();
-    }
+    // if (isGoogleVer && hours > checkHours && location.protocol == "https:") {
+    //     console.log("calling updateServerRecord()");
+    //     updateServerRecord();
+    // }
 
 }
 
@@ -267,9 +267,9 @@ function getSettingsSave() {
         configChanged = configChanged || config.UseGreenKeyboard != val;
         config.UseGreenKeyboard = val;
 
-        if (config.FixZoomIssue) {
-            document.body.classList.remove("text-rsponsive");
-        }
+        // if (config.FixZoomIssue) {
+        //     document.body.classList.remove("text-rsponsive");
+        // }
 
 
         if (configChanged) {
