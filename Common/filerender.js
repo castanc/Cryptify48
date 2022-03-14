@@ -277,7 +277,8 @@ function showText() {
 	showPasswordMessage();
 	showBlock("divText");
 	showBlock("divMedia");
-	//showBlock("divHide");
+	if ( !(encryptionDone || decryptionDone))
+		gotoPage(2);
 	mediaOpen = true;
 }
 

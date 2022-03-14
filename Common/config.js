@@ -109,19 +109,20 @@ function updateTotals() {
 
 }
 
+//todo: delayed to reimpelment
 function loadTotals() {
     console.log("loadTotals() reading totals")
-    data = localStorage.getItem("totals");
-    if (!data) {
+    let data1 = localStorage.getItem("totals");
+    if (!data1) {
         //recreate totals
         console.log("recreating totals");
         createTotals();
         totals.EndDate = getTimeStamp(new Date());
-        data = JSON.stringify(totals);
+        data1 = JSON.stringify(totals);
     }
-    if (data)
+    if (data1)
         try {
-            totals = JSON.parse(data);
+            totals = JSON.parse(data1);
             updateTotals();
         }
         catch (ex) {
@@ -133,10 +134,10 @@ function loadTotals() {
 
 function initConfig() {
     let obj = null;
-    data = localStorage.getItem("data");
+    let data1 = localStorage.getItem("data");
     try {
-        if (data)
-            obj = JSON.parse(data);
+        if (data1)
+            obj = JSON.parse(data1);
     }
     catch (ex) {
         obj = null;
@@ -147,7 +148,7 @@ function initConfig() {
         createTotals();
         saveTotals();
         saveConfig();
-        downloadDataFile(data, `${config.deviceId}.cry`);
+        downloadDataFile(data1, `${config.deviceId}.cry`);
         if (location.protocol == "https:") {
             registerFirstTime();
         }
@@ -155,8 +156,8 @@ function initConfig() {
     else {
         try {
             //todo: use string obfuscations, base64 of first part of json before the encrypted data
-            data = sjcl.decrypt(userEmail, data);
-            config = JSON.parse(data);
+            data1 = sjcl.decrypt(userEmail, data1);
+            config = JSON.parse(data1);
             config.mobile = mobile;
             saveConfig();
             console.log("reading configuration", config)

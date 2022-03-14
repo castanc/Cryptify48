@@ -8,11 +8,15 @@ function processDecrypt(password) {
     resultDTO.message = "";
     let fName = "";
     let messages = ["Process completed ok", "No data to process", "Empty or invalid password.", "Invalid file type. Cannot process file"];
-    let isJson = fileName.toLowerCase().includes(".crypti") &&
+    let isJson = false;
+    
+    if ( usingFile )
+        isJson = fileName.toLowerCase().includes(".crypti") &&
         fileName.toLowerCase().endsWith(".txt");
 
     if (data.length == 0)
         resultDTO.result = -1;
+       
     else if (password.length < config.MinPwdLen)
         resultDTO.result = -2;
 
@@ -39,6 +43,7 @@ function processDecrypt(password) {
         //os.data = os.data.substr(5, os.data.length - 5); 
         os.data = atob(os.data)
         os.data = os.data + os.data2;
+        data = "";
         try {
             os.data = sjcl.decrypt(password, os.data);
             setField("userPassword","");

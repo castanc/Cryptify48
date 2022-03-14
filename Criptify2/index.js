@@ -307,20 +307,14 @@ function handleSysIcons() {
 
 function showPasswordMessage() {
     if (config.ShowHelp) {
-        let pwd = getPassword();
-        if (pwd.length < config.MinPwdLen) {
-            hideControl("divMedia");
-            hideControl("divInputText");
-            gotoPage(2);
-            showWarning("<b>Password. (*Required)</b>", statusWarning);
-            setFocus("userPassword");
-        }
+        showWarning("<b>Password. (*Required)</b>", statusWarning);
     }
+    if (!mobile)
+        setFocus("userPassword");
 }
 
-function showHintMessage()
-{
-    
+function showHintMessage() {
+
     if (config.ShowHelp) {
         let pwd = getPassword();
         if (pwd.length < config.MinPwdLen) {
@@ -363,14 +357,13 @@ function togglePage() {
         setCurrentField("userPassword");
         if (pwd.length < config.MinPwdLen) {
             showPasswordMessage();
-            if ( !mobile)
+            if (!mobile)
                 setFocus("userPassword");
         }
         else if (pwd.length >= config.MinPwdLen)
             showBlock("divViewPassword");
     }
-    else if (page == 3)
-    {
+    else if (page == 3) {
         showHintMessage();
         setCurrentField("pwdHint");
     }

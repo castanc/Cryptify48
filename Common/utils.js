@@ -603,7 +603,7 @@ function showMessage(msg, title = "") {
 		title = statusSuccess;
 	let div = document.getElementById("result");
 	if (msg.length > 0)
-		div.innerHTML = `<div class="alert alert-success">
+		div.innerHTML = `<div class="alert alert-success field-size">
 		<strong>${title}</strong> ${msg}
 	</div>
 	`;
@@ -616,7 +616,7 @@ function showInfo(msg, title = "") {
 		title = `<i class="fas fa-info-circle"></i>`;
 	let div = document.getElementById("result");
 	if (msg.length > 0)
-		div.innerHTML = `<div class="alert alert-info">
+		div.innerHTML = `<div class="alert alert-info field-size">
 		<strong>${title}</strong> ${msg}
 	</div>
 	`;
@@ -632,7 +632,7 @@ function showInfoAt(divId, msg, title = "") {
 		title = `<i class="fas fa-info-circle"></i>`;
 	let div = document.getElementById(divId);
 	if (msg.length > 0)
-		div.innerHTML = `<div class="icon-size alert alert-info">
+		div.innerHTML = `<div class="icon-size alert alert-info field-size">
 		<strong>${title}</strong> ${msg}
 	</div>
 	`;
@@ -650,7 +650,7 @@ function showError(msg) {
 
 	let div = document.getElementById("result");
 	//div.innerHTML = `<h4 class="text-danger text-center footer-size">${msg}</h4`;
-	div.innerHTML = `<div class="alert alert-danger">
+	div.innerHTML = `<div class="alert alert-danger field-size">
 	<strong>${statusError}</strong> ${msg}
   </div>`;
 }

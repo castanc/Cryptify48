@@ -192,7 +192,7 @@ function doEncryptNew() {
                 hideControl("divViewPassword");
                 Keyboard.close();
         
-                sumTotals("E",data.length);
+                //sumTotals("E",data.length);
                 if (usingFile)
                 {
                     hideControl("divInputPDF");
