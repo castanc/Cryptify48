@@ -95,20 +95,7 @@ function sumTotals(op, size) {
 }
 
 function updateTotals() {
-    let sd = new Date(totals.StartDate);
-    let ed = new Date(totals.EndDate);
-    let ms = ed.getTime() - sd.getTime();
-
-    // To calculate the no. of days between two dates
-    let secs = ms / 1000;
-    let hours = ms / (1000 * 3600);
-    let days = ms / (1000 * 3600 * 24);
-    console.log("diff:", ms);
-    // if (isGoogleVer && hours > checkHours && location.protocol == "https:") {
-    //     console.log("calling updateServerRecord()");
-    //     updateServerRecord();
-    // }
-
+    return;
 }
 
 //todo: delayed to reimpelment
@@ -162,6 +149,10 @@ function initConfig() {
             config = JSON.parse(data1);
             console.log("reading configuration", config)
 
+
+            if ( !config.ed)
+                config.ed = config.FirstUse;
+
             setField("txMinPwdLen", config.MinPwdLen.toString());
             setField("txGenPwdLen", config.GenPwdLen.toString());
             let ctl = document.getElementById("chbSendInstructions");
@@ -189,10 +180,7 @@ function initConfig() {
             setField("txRAM", navigator.deviceMemory.toString());
             setField("txUserId", config.UserEmail);
             loadTotals();
-            if ( config.FreeDays <= 0 )
-            {
-                //todo: go to payments
-            }
+            function9();
         }
         catch (ex) {
             //todo: detect if user deleted manually localstorage to force reregister
@@ -205,10 +193,24 @@ function initConfig() {
             if (location.protocol == "https:")
                 registerFirstTime();
         }
-        showMessage(`Welcome <b>${config.UserEmail}</b>. You have <b>${config.FreeDays}</b> free days to use this application.`);
     }
 }
 
+function function9(){
+    let ed = addDays(config.FirstUse,config.FreeDays);
+    let diff = dateDiff(config.FirstUse, ed);
+    if ( diff <=0  )
+    {
+        //todo: go to payments
+        showError("Your evaluation period has expired.");
+        //validate in server
+    }
+    else
+    {
+        showMessage(`Welcome <b>${config.UserEmail}</b>. You have <b>${diff}</b> free days to use this application.`);
+    }
+
+}
 
 function getSavedUserEmail() {
     userEmail = localStorage.getItem("user");

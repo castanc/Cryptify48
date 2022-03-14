@@ -1455,6 +1455,25 @@ function function8() {
 
 }
 
+function dateDiff(sd,ed)
+{
+	let d1 = new Date(sd);
+	let d2 = new Date(ed);
+    let ms = d2.getTime() - d1.getTime();
+	return ms / (1000 * 3600 * 24);
+
+    // To calculate the no. of days between two dates
+    // let secs = ms / 1000;
+    // let hours = ms / (1000 * 3600);
+    // let days = ms / (1000 * 3600 * 24);
+}
+
+function addDays(dt, days) {
+	let dt0 = new Date(dt);
+  return new Date(dt0.getTime() + days*24*60*60*1000);
+}
+
+
 function pasteClipboard() {
 	try {
 		navigator.clipboard.readText().then(

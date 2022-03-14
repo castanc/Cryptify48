@@ -66,7 +66,7 @@ function registerFirstTime(){
 }
 
 async function registerFirstTime2(){
-    let deviceInfo = {deviceId:config.deviceId,mobile:config.mobile,startDate:config.startDate} ;
+    let deviceInfo = {deviceId:config.deviceId,mobile:config.mobile,startDate:config.FirstUse} ;
     let result = await fetchServer(registerUrl,deviceInfo,"POST");
 }
 
