@@ -1,5 +1,5 @@
-var versionNumber = "4.11"; 
-var softwareID = "Crypt.io";
+var versionNumber = "4.11.1"; 
+var softwareID = "ReCrypti.co";
 var environment = "Stage";
 var fileHandle;
 var data = "";

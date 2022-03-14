@@ -57,7 +57,7 @@ function createMenu(step="start") {
 
 
     <div id="divEncrypt" class="text-center" style="display:none">
-    <div class="btn btn-secondary separation-btn-right">
+    <div class="btn btn-primary separation-btn-right">
       <i class="fas fa-user-secret" title="Encrypt" id="decrypt"  style="cursor: pointer;"
         onclick="doEncryptNew()"></i>
         </div>
@@ -65,7 +65,7 @@ function createMenu(step="start") {
 
 
     <div id="divDecrypt" class="text-center" style="display:none">
-    <div class="btn btn-secondary separation-btn-right">
+    <div class="btn btn-primary separation-btn-right">
           <i class="fa fa-unlock" title="Encrypt" id="decrypt"  style="cursor: pointer;"
         onclick="doDecryptNew()"></i>
         </div>
@@ -83,7 +83,7 @@ function createMenu(step="start") {
 
 
     <div id="divViewPassword" class="text-center" style="display:none">
-    <div class="btn btn-secondary separation-btn-right red">
+    <div class="btn btn-danger separation-btn-right">
       <i class="far fa-eye" title="View Password" id="viewPassword"  style="cursor: pointer";
       ></i>
         </div>
@@ -105,6 +105,15 @@ function createMenu(step="start") {
         </div>
     </div>
 
+
+    <div id="divCopy" class="text-center" style="display:none">
+    <div class="btn btn-danger separation-btn-right">
+      <i class="fas fa-copy" title="Copy" id="copy"  style="cursor: pointer;"
+        onclick="doCopy()"></i>
+        </div>
+    </div>
+
+
     <div id="divDownload" class="text-center" style="display: none">
     <div class="btn btn-secondary separation-btn-right">
       <i class="fa fa-save red" title="Download" id="iconDownload"  style="cursor: pointer;"
@@ -113,8 +122,8 @@ function createMenu(step="start") {
     </div>
 
     <div id="divDownload2" class="text-center" style="display: none">
-    <div class="btn btn-secondary separation-btn-right">
-      <i class="fa fa-save green" title="Download" id="iconDownload"  style="cursor: pointer;"
+    <div class="btn btn-success separation-btn-right">
+      <i class="fa fa-save" title="Download" id="iconDownload"  style="cursor: pointer;"
         onclick="doDownload()"></i>
         </div>
     </div>
@@ -124,14 +133,6 @@ function createMenu(step="start") {
     <div class="btn btn-secondary separation-btn-right">
       <i class="fas fa-file-pdf" title="View PDF" id="iconInputPDF"  style="cursor: pointer;"
         onclick="viewInputPDF()"></i>
-        </div>
-    </div>
-
-
-    <div id="divCopy" class="text-center" style="display:none">
-    <div class="btn btn-secondary separation-btn-right">
-      <i class="fas fa-copy red" title="Copy" id="copy"  style="cursor: pointer;"
-        onclick="doCopy()"></i>
         </div>
     </div>
 

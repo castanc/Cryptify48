@@ -20,6 +20,8 @@ function createConfig() {
     config.ShowHelp = true;
     config.CopyDecrypted = true;
     config.UseGreenKeyboard = mobile;
+    config.ed = Date.now;
+    config.FreeDays = 0;
 }
 
 
@@ -158,8 +160,6 @@ function initConfig() {
             //todo: use string obfuscations, base64 of first part of json before the encrypted data
             data1 = sjcl.decrypt(userEmail, data1);
             config = JSON.parse(data1);
-            config.mobile = mobile;
-            saveConfig();
             console.log("reading configuration", config)
 
             setField("txMinPwdLen", config.MinPwdLen.toString());
@@ -189,6 +189,10 @@ function initConfig() {
             setField("txRAM", navigator.deviceMemory.toString());
             setField("txUserId", config.UserEmail);
             loadTotals();
+            if ( config.FreeDays <= 0 )
+            {
+                //todo: go to payments
+            }
         }
         catch (ex) {
             //todo: detect if user deleted manually localstorage to force reregister
@@ -201,6 +205,7 @@ function initConfig() {
             if (location.protocol == "https:")
                 registerFirstTime();
         }
+        showMessage(`Welcome <b>${config.UserEmail}</b>. You have <b>${config.FreeDays}</b> free days to use this application.`);
     }
 }
 

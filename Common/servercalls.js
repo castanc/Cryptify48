@@ -45,6 +45,7 @@ function successRegister(data) {
     showMessageAt(`${userEmail} Registered Succesfully.`)
     config.ServerId = Number ( data.serverId);
     config.FreeDays = data.freeDays;
+    config.ed = data.ed;
     saveConfig();
 }
 
@@ -85,6 +86,13 @@ function failureUpdate(error) {
 }
 
 
+function failure(error) {
+    showSpinner(false);
+    console.log("Failure calling server.");
+    showError("Server Error:" + error);
+}
+
+
 
 function updateServerRecord(){
         
@@ -97,6 +105,37 @@ function updateServerRecord(){
     google.script.run.withFailureHandler(failureUpdate)
     .withSuccessHandler(successUpdate)
     .updateServerRecord(totals);
+
+}
+
+function successValidatePeriod(data) {
+    if (data)
+    {
+        config.FreeDays = data.freeDays;
+        config.ed = data.ed;
+        console.log("Saving Server Validation", config);
+        saveConfig();
+
+        if ( config.freeDays <=0 )
+        {
+            //todo call pay page
+        }
+    }
+}
+
+
+function validatePeriod(){
+
+    if ( !isGoogleVer )
+        return;
+
+        let obj = {};
+        obj.deviceId = deviceId;
+        obj.userEmail = config.UserEmail;
+
+        google.script.run.withFailureHandler(failure)
+    .withSuccessHandler(successValidatePeriod)
+    .validatePeriod(obj);
 
 }
 
