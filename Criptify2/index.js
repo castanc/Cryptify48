@@ -362,14 +362,18 @@ function togglePage() {
         let pwd = getPassword();
         setCurrentField("userPassword");
         if (pwd.length < config.MinPwdLen) {
-            showWarning("Optional <i>Password Hint</i>, <b>Password. (*Required)</b>", statusWarning);
-            setFocus("userPassword");
+            showPasswordMessage();
+            if ( !mobile)
+                setFocus("userPassword");
         }
         else if (pwd.length >= config.MinPwdLen)
             showBlock("divViewPassword");
     }
     else if (page == 3)
+    {
+        showHintMessage();
         setCurrentField("pwdHint");
+    }
 
     //if (encryptedFile || manualText || dataFromClipboard)
     showFileInfo();
