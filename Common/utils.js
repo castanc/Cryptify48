@@ -1482,6 +1482,7 @@ function addDays(dt, days) {
 	var result = new Date(dt);
 	result.setDate(result.getDate() + days);
 	return result;
+	
  }
 
 

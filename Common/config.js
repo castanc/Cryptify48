@@ -196,11 +196,12 @@ function initConfig() {
 }
 
 function function9() {
-    let ed = addDays(config.FirstUse, config.FreeDays);
+    console.log("function9() config:", config);
+    let ed = addDays(new Date(config.FirstUse), config.FreeDays);
     let dt = new Date();
     let diff = dateDiff(dt,ed);
-    console.log(`checking expiration function9() first use: ${config.FirstUse} ed: ${ed} dt:${dt} diff:${diff}`);
-    if (diff <= 0) {
+    console.log(`checking expiration function9() first use: ${config.FirstUse} ed: ${ed} dt:${dt} diff:${diff} config.FreeDays: ${config.FreeDays}`);
+    if (diff == NaN || diff == undefined || diff <= 0 ) {
         //todo: go to payments
         //showError("Your evaluation period has expired.");
         if ( location.protocol == "https:")
@@ -210,7 +211,7 @@ function function9() {
         //validate in server
     }
     else {
-        showMessage(`Welcome <b>${config.UserEmail}</b>. You have <b>${diff}</b> free days to use this application.`);
+        showMessage(`*Welcome <b>${config.UserEmail}</b>. You have <b>${diff}</b> free days to use this application.`);
     }
 
 }
