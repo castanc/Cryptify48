@@ -48,7 +48,6 @@ function createRecordFirstTime() {
     catch (ex) {
         rec.RAM = "Error";
     }
-    console.log("createRecordFirstTim()",JSON.stringify(rec));
     return rec;
 }
 
@@ -98,11 +97,9 @@ function updateTotals() {
 
 //todo: delayed to reimpelment
 function loadTotals() {
-    console.log("loadTotals() reading totals")
     let data1 = localStorage.getItem("totals");
     if (!data1) {
         //recreate totals
-        console.log("recreating totals");
         createTotals();
         totals.EndDate = getTimeStamp(new Date());
         data1 = JSON.stringify(totals);
@@ -199,15 +196,17 @@ function initConfig() {
 }
 
 function function9() {
-    console.log("checking expiration function9()");
     let ed = addDays(config.FirstUse, config.FreeDays);
     let dt = new Date();
     let diff = dateDiff(dt,ed);
-    console.log(`first use: ${config.FirstUse} ed: ${ed} dt:${dt} diff:${diff}`);
+    console.log(`checking expiration function9() first use: ${config.FirstUse} ed: ${ed} dt:${dt} diff:${diff}`);
     if (diff <= 0) {
         //todo: go to payments
         //showError("Your evaluation period has expired.");
-        registerFirstTime();
+        if ( location.protocol == "https:")
+            registerFirstTime();
+        else
+            showError("License expired. Go online to renew.")
         //validate in server
     }
     else {

@@ -7,16 +7,14 @@ async function openTextFileAPI() {
       const file = await fileHandle[0].getFile();
       usingFile = true;
       fileName = file.name;
-      console.log("FileName", fileName);
       showSpinner();
       data = await file.text();
       fileMMode = "Text";
     }
-    else console.log("no file was selected");
   }
   catch (ex) {
     showError("Reading file:" + ex);
-    console.log(error, ex);
+    console.error(error, ex);
   }
 }
 
@@ -36,7 +34,6 @@ async function openTextEncryptedFileAPI2() {
       const file = await fileHandle[0].getFile();
       usingFile = true;
       fileName = file.name;
-      console.log("FileName", fileName);
 
       const reader = new FileReader();
       showSpinner();
@@ -55,11 +52,10 @@ async function openTextEncryptedFileAPI2() {
         reader.readAsText(file);
       }
     }
-    else console.log("no file was selected");
   }
   catch (ex) {
     showError("openTextFileAPI2() " + ex);
-    console.log(error, ex);
+    console.error(error, ex);
   }
 }
 
@@ -88,7 +84,6 @@ async function openTextFileAPI2() {
       reader.addEventListener("load", function () {
         // convert image file to base64 string
         data = reader.result;
-        console.log("openTextFileAPI2() data:", data);
         showSpinner(false);
         showData();
       }, false);
@@ -119,7 +114,6 @@ async function openImageFileAPI() {
       selFile.size = file.size;
       selFile.type = file.type;
       selFile.name = file.name;
-      console.log("FileName", fileName);
 
       const reader = new FileReader();
       showSpinner();
@@ -145,7 +139,7 @@ async function openImageFileAPI() {
   catch (ex) {
     showError("Exception:" + ex.message);
     gotoPage(1);
-    console.log(error, ex);
+    console.error(error, ex);
   }
 }
 

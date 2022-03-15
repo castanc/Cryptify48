@@ -89,8 +89,8 @@ function setCurrentField(cField) {
     if ( (mobile || config.UseGreenKeyboard) && !Keyboard.properties.isOpen && !mediaOpen )
         openKeyboard();
 
-    let dbgMsg = `setCurrentField(${cField}) [${Keyboard.properties.value}]`;
-    console.log(dbgMsg);
+    // let dbgMsg = `setCurrentField(${cField}) [${Keyboard.properties.value}]`;
+    // console.log(dbgMsg);
 }
 
 function disableInputs(val = true) {

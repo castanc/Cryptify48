@@ -1,7 +1,6 @@
 
 function createMenu(step="start") {
 
-    console.log("createMenu()");
   let menuMobile = "";
 
   menuMobile = `

@@ -40,21 +40,19 @@ function failureRegister(error) {
     showError("Server Error:" + error);
 }
 
-function successRegister(data) {
-    console.log("successRegister()",data);
+function successRegister(result) {
+    let data  = JSON.parse(result);
+    console.log("*************************************         successRegister()",data);
     showMessageAt(`${userEmail} Registered Succesfully.`)
     config.ServerId = Number ( data.serverId);
     config.FreeDays = data.freeDays;
-    config.ed = data.ed;
-    let dt = new Date();
-    let diff = dateDiff(dt,data.ed);
-    if ( diff<=0)
+    if ( config.FreeDays <= 0)
     {
         showError("License period expired");
         //todo: check totals ussages send to offer to join, if 0 send to p buy page
     }
     else 
-        showMessage(`Welcome <b>${config.UserEmail}</b>. You have <b>${diff}</b> free days to use this application.`);
+        showMessage(`Welcome <b>${config.UserEmail}</b>. You have <b>${config.FreeDays}</b> free days to use this application.`);
 
     saveConfig();
 }
