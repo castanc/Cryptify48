@@ -52,7 +52,7 @@ function successRegister(result) {
         //todo: check totals ussages send to offer to join, if 0 send to p buy page
     }
     else 
-        showMessage(`Welcome <b>${config.UserEmail}</b>. You have <b>${config.FreeDays}</b> free days to use this application.`);
+        showMessage(`Welcome <b>${config.UserEmail}</b>. You have <b>${Math.round(config.FreeDays)}</b> free days to use this application.`);
 
     saveConfig();
 }

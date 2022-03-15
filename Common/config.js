@@ -183,7 +183,7 @@ function initConfig() {
         }
         catch (ex) {
             //todo: detect if user deleted manually localstorage to force reregister
-            showError("Error reading configuration. " + ex.message);
+            showError("Exception reading configuration. " + ex.message);
             createConfig();
             saveConfig();
             createTotals();
@@ -197,10 +197,11 @@ function initConfig() {
 
 function function9() {
     console.log("function9() config:", config);
-    let ed = addDays(new Date(config.FirstUse), config.FreeDays);
+    let sd = JSON.parse(`{${config.StartDate}}`);
+    let ed = addDays(sd, config.FreeDays);
     let dt = new Date();
     let diff = dateDiff(dt,ed);
-    console.log(`checking expiration function9() first use: ${config.FirstUse} ed: ${ed} dt:${dt} diff:${diff} config.FreeDays: ${config.FreeDays}`);
+    console.log(`checking expiration function9() first use: ${sd} ed: ${ed} dt:${dt} diff:${diff} config.FreeDays: ${config.FreeDays}`);
     if (diff == NaN || diff == undefined || diff <= 0 ) {
         //todo: go to payments
         //showError("Your evaluation period has expired.");
@@ -211,7 +212,7 @@ function function9() {
         //validate in server
     }
     else {
-        showMessage(`*Welcome <b>${config.UserEmail}</b>. You have <b>${diff}</b> free days to use this application.`);
+        showMessage(`*Welcome <b>${config.UserEmail}</b>. You have <b>${Math.round(diff)}</b> free days to use this application.`);
     }
 
 }
@@ -239,6 +240,7 @@ function getSavedUserEmail() {
 
 
 function saveConfig() {
+    console.log("saving config",config);
     if (validateEmail(userEmail)) {
         let result = sjcl.encrypt(userEmail, JSON.stringify(config));
         configHash = MD5(result);
