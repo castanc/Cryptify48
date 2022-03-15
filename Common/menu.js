@@ -27,7 +27,7 @@ function createMenu(step="start") {
 
 
     <div id="divPaste" class="text-center">
-    <div class="btn btn-primare separation-btn-right">
+    <div class="btn btn-primary separation-btn-right">
       <i class="fas fa-paste" title="Paste Text from Clipboard" id="pasteClipboard" style="cursor: pointer;"
         onclick="selectPaste()"></i>
         </div>

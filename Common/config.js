@@ -48,6 +48,7 @@ function createRecordFirstTime() {
     catch (ex) {
         rec.RAM = "Error";
     }
+    console.log("createRecordFirstTim()",JSON.stringify(rec));
     return rec;
 }
 
@@ -121,6 +122,7 @@ function loadTotals() {
 function initConfig() {
     let obj = null;
     let data1 = localStorage.getItem("data");
+    console.log("initConfig()");
     try {
         if (data1)
         {
@@ -150,6 +152,7 @@ function initConfig() {
             //todo: use string obfuscations, base64 of first part of json before the encrypted data
             data1 = sjcl.decrypt(userEmail, data1);
             config = JSON.parse(data1);
+            console.log("Config readed ok",config);
             function9();
 
             setField("txMinPwdLen", config.MinPwdLen.toString());
@@ -196,8 +199,11 @@ function initConfig() {
 }
 
 function function9() {
+    console.log("checking expiration function9()");
     let ed = addDays(config.FirstUse, config.FreeDays);
-    let diff = dateDiff(config.FirstUse, ed);
+    let dt = new Date();
+    let diff = dateDiff(dt,ed);
+    console.log(`first use: ${config.FirstUse} ed: ${ed} dt:${dt} diff:${diff}`);
     if (diff <= 0) {
         //todo: go to payments
         //showError("Your evaluation period has expired.");
