@@ -189,7 +189,6 @@ function initConfig() {
             saveConfig();
             createTotals();
             saveTotals();
-            //downloadDataFile(result, `Config.cry`);
             if (location.protocol == "https:")
                 registerFirstTime();
         }
@@ -198,12 +197,12 @@ function initConfig() {
 
 function function9() {
     console.log("function9() config:", config);
-    let sd = JSON.parse(`{${config.StartDate}}`);
+    let sd = config.FirstUse;
     let ed = addDays(sd, config.FreeDays);
     let dt = new Date();
     let diff = dateDiff(dt,ed);
     console.log(`checking expiration function9() first use: ${sd} ed: ${ed} dt:${dt} diff:${diff} config.FreeDays: ${config.FreeDays}`);
-    if (diff == NaN || diff == undefined || diff <= 0 ) {
+    if (diff <= 0 ) {
         //todo: go to payments
         //showError("Your evaluation period has expired.");
         if ( location.protocol == "https:")
