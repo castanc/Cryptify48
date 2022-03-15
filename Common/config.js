@@ -16,17 +16,18 @@ function createConfig() {
     config.ShowLink = true;
     config.ServerId = 0;
     config.UserType = "F";
-    config.FreeDays = 30;
+    config.FreeDays = 1;
     config.ShowHelp = true;
     config.CopyDecrypted = true;
     config.UseGreenKeyboard = mobile;
     config.ed = Date.now;
     config.FreeDays = 0;
+    config.DeviceId = deviceId;
 }
 
 
 function createRecordFirstTime() {
-    let rec  = {};
+    let rec = {};
     rec.width = window.innerWidth;
     rec.StartDate = getTimeStamp(new Date());
     rec.EndDate = rec.StartDate;
@@ -34,19 +35,17 @@ function createRecordFirstTime() {
     rec.protocol = location.protocol;
     rec.height = window.innerHeight;
     rec.UserEmail = userEmail;
-    if ( mobile )
+    if (mobile)
         rec.mobile = 1;
     else
         rec.mobile = 0;
 
     rec.deviceId = deviceId;
     rec.userEmail = config.UserEmail;
-    try
-    {
+    try {
         rec.RAM = navigator.deviceMemory.toString();
     }
-    catch(ex)
-    {
+    catch (ex) {
         rec.RAM = "Error";
     }
     return rec;
@@ -65,18 +64,16 @@ function createTotals() {
     totals.protocol = location.protocol;
     totals.width = window.innerWidth;
     totals.height = window.innerHeight;
-    if ( mobile )
+    if (mobile)
         totals.mobile = 1;
     else
         totals.mobile = 0;
     totals.deviceId = deviceId;
     totals.userEmail = config.UserEmail;
-    try
-    {
+    try {
         totals.RAM = navigator.deviceMemory.toString();
     }
-    catch(ex)
-    {
+    catch (ex) {
         totals.RAM = "Error";
     }
 }
@@ -126,7 +123,15 @@ function initConfig() {
     let data1 = localStorage.getItem("data");
     try {
         if (data1)
-            obj = JSON.parse(data1);
+        {
+            let md5 = MD5(data1);
+            if ( md5 == configHash)
+                obj = JSON.parse(data1);
+            else
+            {
+                //todo: invalid config, altered corrupted
+            }
+        }
     }
     catch (ex) {
         obj = null;
@@ -138,20 +143,14 @@ function initConfig() {
         saveTotals();
         saveConfig();
         downloadDataFile(data1, `${config.deviceId}.cry`);
-        if (location.protocol == "https:") {
-            registerFirstTime();
-        }
+        registerFirstTime();
     }
     else {
         try {
             //todo: use string obfuscations, base64 of first part of json before the encrypted data
             data1 = sjcl.decrypt(userEmail, data1);
             config = JSON.parse(data1);
-            console.log("reading configuration", config)
-
-
-            if ( !config.ed)
-                config.ed = config.FirstUse;
+            function9();
 
             setField("txMinPwdLen", config.MinPwdLen.toString());
             setField("txGenPwdLen", config.GenPwdLen.toString());
@@ -196,39 +195,49 @@ function initConfig() {
     }
 }
 
-function function9(){
-    let ed = addDays(config.FirstUse,config.FreeDays);
+function function9() {
+    let ed = addDays(config.FirstUse, config.FreeDays);
     let diff = dateDiff(config.FirstUse, ed);
-    if ( diff <=0  )
-    {
+    if (diff <= 0) {
         //todo: go to payments
-        showError("Your evaluation period has expired.");
+        //showError("Your evaluation period has expired.");
+        registerFirstTime();
         //validate in server
     }
-    else
-    {
+    else {
         showMessage(`Welcome <b>${config.UserEmail}</b>. You have <b>${diff}</b> free days to use this application.`);
     }
 
 }
 
 function getSavedUserEmail() {
-    userEmail = localStorage.getItem("user");
-    if (!userEmail) 
-        userEmail = "";
 
-    deviceId = localStorage.getItem("device");
-    if (!deviceId)
-        deviceId = makeid(64);
+    let data1 = localStorage.getItem("data1");
+    userEmail = "";
+    deviceId = createGuid()
+    configHash = "";
+    if (data1) {
+        try {
+            data1 = atob(data1);
+            let parts = data1.split(",");
+            userEmail = parts[0];
+            deviceId = parts[1];
+            configHash = parts[2];
+            return;
+        }
+        catch (ex) {
+
+        }
+    }
 }
 
 
 function saveConfig() {
     if (validateEmail(userEmail)) {
         let result = sjcl.encrypt(userEmail, JSON.stringify(config));
+        configHash = MD5(result);
         localStorage.setItem("data", result);
-        localStorage.setItem("user", userEmail);
-        localStorage.setItem("device", deviceId);
+        localStorage.setItem("data1",btoa(`${userEmail},${deviceId},${configHash}`));
         setField("txUserId", userEmail);
     }
     else

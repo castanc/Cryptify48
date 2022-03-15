@@ -15,19 +15,6 @@ function createMenu(step="start") {
     </div>
 
 
-    <div id="divInfo">
-    <div class="btn btn-secondary separation-btn-right">
-      <i class="fas fa-info-circle" title="System Info" id="info"
-         style="cursor: pointer;" onclick="toggleSysInfo()"></i>
-         </div>
-    </div>
-
-    <div id="divSettings" class="text-center">
-    <div class="btn btn-secondary separation-btn-right">
-      <i class="fas fa-cog" title="System Info" id="settings"
-         style="cursor: pointer;" onclick="toggleSettings()"></i>
-         </div>
-    </div>
 
 
 
@@ -40,7 +27,7 @@ function createMenu(step="start") {
 
 
     <div id="divPaste" class="text-center">
-    <div class="btn btn-secondary separation-btn-right">
+    <div class="btn btn-primare separation-btn-right">
       <i class="fas fa-paste" title="Paste Text from Clipboard" id="pasteClipboard" style="cursor: pointer;"
         onclick="selectPaste()"></i>
         </div>
@@ -49,7 +36,7 @@ function createMenu(step="start") {
 
 
     <div id="divOpenFile" class="text-center">
-    <div class="btn btn-secondary separation-btn-right">
+    <div class="btn btn-primary separation-btn-right">
       <i class="fas fa-folder-open" title="Open File" id="openFile"  style="cursor: pointer;"
         onclick="openImageFile()"></i>
         </div>
@@ -134,6 +121,20 @@ function createMenu(step="start") {
       <i class="fas fa-file-pdf" title="View PDF" id="iconInputPDF"  style="cursor: pointer;"
         onclick="viewInputPDF()"></i>
         </div>
+    </div>
+
+    <div id="divInfo">
+    <div class="btn btn-secondary separation-btn-right">
+      <i class="fas fa-info-circle" title="System Info" id="info"
+         style="cursor: pointer;" onclick="toggleSysInfo()"></i>
+         </div>
+    </div>
+
+    <div id="divSettings" class="text-center">
+    <div class="btn btn-secondary separation-btn-right">
+      <i class="fas fa-cog" title="System Info" id="settings"
+         style="cursor: pointer;" onclick="toggleSettings()"></i>
+         </div>
     </div>
 
 

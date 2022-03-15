@@ -46,15 +46,26 @@ function successRegister(data) {
     config.ServerId = Number ( data.serverId);
     config.FreeDays = data.freeDays;
     config.ed = data.ed;
+    let dt = new Date();
+    let diff = dateDiff(dt,data.ed);
+    if ( diff<=0)
+    {
+        showError("License period expired");
+        //todo: check totals ussages send to offer to join, if 0 send to p buy page
+    }
+    else 
+        showMessage(`Welcome <b>${config.UserEmail}</b>. You have <b>${diff}</b> free days to use this application.`);
+
     saveConfig();
 }
 
 
+//todo update localstorage config with server updated data
 function registerFirstTime(){
     console.log("calling registerFirstTime()");
     let msg = `isGoogleVer:${isGoogleVer} ServerId: ${config.ServerId}`;
     console.log(msg);
-    if ( isGoogleVer && (!config.ServerId || config.ServerId == 0 ))
+    if (location.protocol == "https:") 
     {
         let rec = createRecordFirstTime();
         config.ServerId = 0;

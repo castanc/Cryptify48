@@ -1,0 +1,29 @@
+march 14 2022
+
+free period validation.
+
+localstorage entries:
+data1: deviceid/useremail encoded to base64
+data2: encrypted config.
+
+if ( config is missing):
+{
+    if (deviceId is missing)
+        -user is new
+        -user cleared localstorage
+}
+else if ( deviceid is missing)
+{
+    -user is new
+    -user deleted
+}
+
+ask useremail
+call server with useremail and deviceId ( if any )
+
+if record exists for useremail:
+    resave config to local storage
+    user cleared localstorage count
+create new user
+    save config to lcoal storage
+    

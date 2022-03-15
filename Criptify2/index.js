@@ -694,7 +694,6 @@ function hideSysInfo() {
 
 
 function saveEmail(email) {
-    event.preventDefault();
     if (!email || email.length == 0)
         email = getField("userEmail");
 
@@ -703,9 +702,8 @@ function saveEmail(email) {
         createConfig();
         saveConfig();
         initConfig();
-        if (location.protocol == "https:")
-            registerFirstTime();
-        else {
+        if (location.protocol != "https:")
+        {
             config.ServerId = 0;
             config.FreeDays = 1;
             saveConfig();

@@ -1313,7 +1313,7 @@ function showBlock(ctl) {
 }
 
 function showTitle() {
-	writeInnerHTML("divTitle", `<label>Crypt.io ${environment} Version: ${versionNumber}</label>`);
+	writeInnerHTML("divTitle", `<label>${softwareID} ${environment} Version: ${versionNumber}</label>`);
 }
 
 function hideTitle() {
@@ -1468,10 +1468,21 @@ function dateDiff(sd,ed)
     // let days = ms / (1000 * 3600 * 24);
 }
 
+function createGuid(){  
+	function S4() {  
+	   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);  
+	}  
+	return (S4() + S4() + "-" + S4() + "-4" + S4().substr(0,3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();  
+ }  
+   
+
 function addDays(dt, days) {
-	let dt0 = new Date(dt);
-  return new Date(dt0.getTime() + days*24*60*60*1000);
-}
+// 	let dt0 = new Date(dt);
+//   return new Date(dt0.getTime() + days*24*60*60*1000);
+	var result = new Date(dt);
+	result.setDate(result.getDate() + days);
+	return result;
+ }
 
 
 function pasteClipboard() {
