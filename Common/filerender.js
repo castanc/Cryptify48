@@ -277,8 +277,11 @@ function showText() {
 	showPasswordMessage();
 	showBlock("divText");
 	showBlock("divMedia");
-	if ( !(encryptionDone || decryptionDone))
+	if ( !(encryptionDone || decryptionDone) || encryptedFile)
+	{
 		gotoPage(2);
+		openKeyboard();
+	}
 	mediaOpen = true;
 }
 
