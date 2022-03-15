@@ -45,6 +45,7 @@ function successRegister(result) {
     console.log("*************************************         successRegister()",data);
     showMessageAt(`${userEmail} Registered Succesfully.`)
     config.ServerId = Number ( data.serverId);
+    config.FirstUse = data.StartDate;
     config.FreeDays = data.freeDays;
     if ( config.FreeDays <= 0)
     {

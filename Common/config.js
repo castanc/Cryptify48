@@ -20,7 +20,7 @@ function createConfig() {
     config.ShowHelp = true;
     config.CopyDecrypted = true;
     config.UseGreenKeyboard = mobile;
-    config.ed = Date.now;
+    config.ed = new Date();
     config.FreeDays = 0;
     config.DeviceId = deviceId;
 }
@@ -183,7 +183,8 @@ function initConfig() {
         }
         catch (ex) {
             //todo: detect if user deleted manually localstorage to force reregister
-            showError("Exception reading configuration. " + ex.message);
+            //showError("Exception reading configuration. " + ex.message);
+            showWarning("Refreshing configuration...");
             createConfig();
             saveConfig();
             createTotals();
