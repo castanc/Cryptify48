@@ -10,6 +10,12 @@ var totals = {};
 var daysFree = 15;
 
 
+function checkAddDates(){
+  let dt = new Date();
+  let dt2 = addDays(dt,15);
+  Logger.log(dt,dt2);
+}
+
 function createTotals() {
   totals = {};
   totals.UserId = "xxx";
@@ -23,6 +29,13 @@ function createTotals() {
   totals.EndDate = new Date();
 }
 
+
+function checkCreateRecord(){
+  let json = `{"width":1417,"StartDate":"2022-03-15T20:31:14.249Z","EndDate":"2022-03-15T20:31:14.249Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 OPR/83.0.4254.70","protocol":"https:","height":645,"UserEmail":"castanc@gmail.com","mobile":0,"deviceId":"0c7f73bc-1b8e-48c4-b42f-4c6df47964d5","userEmail":"castanc@gmail.com","RAM":"4"}`;
+
+  let obj = JSON.parse(json);
+  let result = recordFirstTime(obj);
+}
 
 function doPost(e) {
   Logger.log(e.postData);
@@ -57,30 +70,105 @@ function getRow(ss, key, key2, sheetName = "", col = 1, col2 = 2) {
   return row;
 }
 
-/*
-{protocol=https:, tdb=0.0, RAM=4, wdth=786.0, deviceId=x.mjuYRNO$$d2B-=aLkV62HFWCP=JI=#dM1(ksEU46BCi1rn8TKtyY7@@qM%0PVy, EndDate=2022-03-12T20:34:44.529Z, userAgent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 OPR/83.0.4254.70, height=645.0, mobile=0.0, StartDate=2022-03-12T20:34:44.529Z, teb=0.0, td=0.0, userEmail=castanc@gmail.com, te=0.0}
-*/
+function getUserRows(ss, register) {
+  let row = {};
+  row.RowCount = 0;
+  row.data = [];
+  row.devices = 0;
+
+  let sheet;
+  sheet = ss.getActiveSheet();
+
+  var rangeData = sheet.getDataRange();
+  let grid = rangeData.getValues();
+  row.data = grid.filter(x => x[1] == register.deviceId && x[2] == register.UserEmail);
+  if ( row.data.length == 0 )
+    row.data = grid.filter(x => x[5] == register.mobile && x[2] == register.UserEmail && x[7] == register.RAM);
+
+  row.devices = grid.filter(x =>  x[2] == register.UserEmail).length;      
+  row.RowCount = grid.length;
+
+  return row;
+
+}
+
+function getUserDevices(ss, email) {
+
+  let sheet = ss.getActiveSheet();
+
+  var rangeData = sheet.getDataRange();
+  let grid = rangeData.getValues();
+  return grid.length;
+
+}
+
 
 function recordFirstTime(register) {
   Logger.log(register);
 
-  let id = 0;
-  fileKey = register.deviceId.substr(0, 4);
+  let r = {};
+  r.serverId = 0;
+  r.freeDays = daysFree;
+  r.userDevices = 0;
+  r.newUser = true;
+  r.StartDate = register.StartDate;
+  r.ed = addDays(register.StartDate, daysFree);
+
+  fileKey = register.UserEmail.substr(0, 4);
+  let folder = getCreateFolder(folderName);
+  let ss = getCreateSpreadSheet(folder, `U_${fileKey}`,
+    "RowId,DeviceId,UserEmail,StartDate,EndDate,Mobile,UserAgent,RAM,width,height,IP,protocol");
+
+
+  let row = getUserRows(ss, register);
+  Logger.log(row);
+  if (row.data.length == 0) {
+    r.deviceId = register.deviceId;
+    let sheet = ss.getActiveSheet();
+    r.serverId = row.RowCount+1;
+    let data = [r.serverId, register.deviceId, register.userEmail, register.StartDate,
+      register.EndDate, register.mobile, register.userAgent, register.RAM, register.width, register.height, register.IP, register.protocol];
+    sheet.appendRow(data);
+    r.userDevices = row.devices;
+  }
+  else {
+    r.serverId = row.data[0][0];
+    r.deviceId = row.data[0][1];
+    r.newUser = false;
+    r.StartDate = new Date(row.data[0][3])
+    r.ed = addDays(r.StartDate, daysFree);
+    r.userDevices = row.devices;
+    r.freeDays = dateDiff(new Date(),r.ed);
+  }
+  Logger.log(r);
+  //return `${r.serverId}/${r.freeDays}`;
+  return JSON.stringify(r);
+}
+
+function validatePeriod(register) {
+  let obj = {};
+  obj.freeDays = 0;
+  obj.id = 0;
+  obj.ed = new Date.now;
+
+  fileKey = register.UserEmail.substr(0, 4);
   let folder = getCreateFolder(folderName);
   let ss = getCreateSpreadSheet(folder, `U_${fileKey}`, "RowId,DeviceId,UserEmail,StartDate,EndDate,Mobile,UserAgent,RAM,width,height,IP,protocol");
   let row = getRow(ss, register.deviceId, register.UserEmail);
-  if (row.data.length == 0) {
-    id = row.RowCount + 1;
-    let sheet = ss.getActiveSheet();
-    let data = [id, register.deviceId, register.userEmail, register.StartDate, register.EndDate, register.mobile, register.userAgent, register.RAM, register.width, register.height, register.IP,register.protocol];
-    sheet.appendRow(data);
+  if (row.data.length > 0) {
+    obj.id = row[0];
+    let ds = row[3];
+    let ed = addDays(sd, daysFree);
+    let ms = ed.getTime() - sd.getTime();
+
+    // To calculate the no. of days between two dates
+    //let secs = ms / 1000;
+    //let hours = ms / (1000 * 3600);
+    obj.ed = ed;
+    obj.freeDays = ms / (1000 * 3600 * 24);
   }
-
-
-
-  return id;
+  return obj;
 }
-
 
 function updateServerRecord(totals) {
   let id = 0;
