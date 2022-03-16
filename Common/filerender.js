@@ -278,11 +278,7 @@ function showText() {
 	showBlock("divText");
 	showBlock("divMedia");
 	mediaOpen = true;
-	if ( !(encryptionDone || decryptionDone) || encryptedFile)
-	{
-		gotoPage(2);
-	}
-	openKeyboard(true);
+	openKeyboard();
 }
 
 function showNoVisor() {
