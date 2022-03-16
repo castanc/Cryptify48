@@ -144,7 +144,11 @@ ${showHint}${lk}${instructions}${fMode}
 data:${os.data}data2:${os.data2}data3:${os.data3}`;
 
         if (usingFile) {
-            outFileName = `${fileName}.crypti.txt`;
+            let fn = getField("txFileName");
+            if ( fn.length > 0 )
+                fileName = fn;
+
+            outFileName = fileName; //`${fileName}.crypti.txt`;
             downloadDataFile(JSON.stringify(os), outFileName);
             //writeTextFile(null,JSON.stringify(os), `${fileName}.json`)
             resultDTO.message = "File encrypted and downloaded locally.";

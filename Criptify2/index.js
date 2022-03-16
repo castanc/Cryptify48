@@ -358,6 +358,14 @@ function togglePage() {
         showHintMessage();
         setCurrentField("pwdHint");
     }
+    else if ( pagee == 4 )
+    {
+        if ( !encryptedFile)
+            setField("txFileName",`${fileNamme}.crypti.txt`);
+        else
+            setField("txFileName",fileName);
+        setCurrentField("txFileName");
+    }
 
     if (mobile || config.UseGreenKeyboard) {
         if (Keyboard.isOpen)

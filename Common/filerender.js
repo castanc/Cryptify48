@@ -187,14 +187,13 @@ function hideMedia() {
 	hideControl("divInputPDF");
 	hideControl("divInfo");
 	hideControl("divSettings");
+	hideControl("divMedia");
 }
 
 function showData() {
 	encryptedFile = false;
-
 	hideMedia();
 	mediaOpen = false;
-
 	canProcess = true;
 	let dataType = "text/plain";
 	if (selFile && usingFile) {
@@ -214,6 +213,9 @@ function showData() {
 	else showText();
 	showFileInfo();
 	if (encryptedFile) {
+		mediaOpen = false;
+		hideControl("divMedia");
+		hideControl("divHide");
 		gotoPage(2);
 		openKeyboard();
 	}

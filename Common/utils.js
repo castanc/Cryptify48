@@ -868,6 +868,8 @@ function confirmDownload() {
 	hideControl("divDownload");
 	showBlock("divDownload2");
 	setField("txFileName",fileName);
+	setCurrentField("txFileName");
+	openKeyboard();
 	showBlock("divFileName");
 	showError("Confirm Download/Save!. File will be unencrypted. Dispose properly.");
 }
@@ -877,7 +879,7 @@ function doDownload() {
 	let fn = getField("txFileName");
 	if ( fn.length > 0 )
 		fileName = fn;
-		
+
 	if (data.length > 0) {
 		//downloadDataFile(data, fileName);
 		//todo: not downloading text files
