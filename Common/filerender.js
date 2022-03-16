@@ -6,8 +6,8 @@ function showFileInfo() {
 	hideControl("divMedia");
 	let isEncrypted = "";
 	if (encryptedFile) {
-		if (data.includes("Hint:")) {
-			let txHint = extract(data, "Hint:", "\n");
+		if (data.includes(`"Hint":"`)) {
+			let txHint = extract(data, `"Hint":"`, "\n");
 			setField("pwdHint", txHint);
 		}
 		txtEncrypted = `<b class="text-warning">This is an encrypted file.</b>`;
@@ -209,6 +209,7 @@ function showData() {
 	else if (dataType.includes("audio"))
 		showAudio();
 	else showText();
+	showFileInfo();
 	if (encryptedFile) {
 		mediaOpen = false;
 		hideControl("divMedia");
@@ -220,8 +221,8 @@ function showData() {
 		mediaOpen = true;
 		showBlock("divMedia");
 		showBlock("divHide");
+		showBlock("divText");
 	}
-	showFileInfo();
 	toggleCanProcess(canProcess, fileSizeText);
 	if (encryptionDone || decryptionDone) {
 		hideControl("divNext");
@@ -279,11 +280,11 @@ function showText() {
 		let txHint = extract(data, "Hint:", "\n");
 		setField("pwdHint", txHint);
 	}
-	showPasswordMessage();
-	showBlock("divText");
-	showBlock("divMedia");
-	mediaOpen = true;
-	openKeyboard();
+	// showPasswordMessage();
+	// showBlock("divText");
+	// showBlock("divMedia");
+	// mediaOpen = true;
+	// openKeyboard();
 }
 
 function showNoVisor() {

@@ -13,16 +13,6 @@ function openKeyboard(force = false) {
 }
 
 
-function toggleKeyboard()
-{
-
-    if ( Keyboard.isOpen)
-        Keyboard.close();
-    else
-        openKeyboard();
-    
-        Keyboard.isOpen = !Keyboard.isOpen;
-}
 
 function keyed(k) {
     if (Keyboard.properties.isOpen && initialIcons) {

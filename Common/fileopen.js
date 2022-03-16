@@ -201,8 +201,7 @@ function handleFileSelect(evt) {
           usingFile = true;
           if ( config.showMediaOnOpen)
             showData();
-          if ( Keyboard.properties.isOpen )
-            Keyboard.close();
+          Keyboard.close();
 
         }
 

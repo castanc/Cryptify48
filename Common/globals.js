@@ -1,4 +1,4 @@
-var versionNumber = "4.12.12"; 
+var versionNumber = "4.12.16"; 
 var softwareID = "ReCrypti.co";
 var environment = "Stage";
 var fileHandle;

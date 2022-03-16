@@ -858,9 +858,9 @@ function getSizeText(len) {
 }
 
 function isEncryptedData() {
-	encryptedFile = data.includes("data:") && data.includes(`data2:`) && data.includes(`data3:`);
+	encryptedFile = data.includes(softwareID) && data.includes("data:") && data.includes(`data2:`) && data.includes(`data3:`);
 	if (!encryptedFile )
-		encryptedFile = data.includes(`"data":`) && data.includes(`"data2":`) && data.includes(`"data3":`);
+		encryptedFile = data.includes(softwareID) && data.includes(`"data":`) && data.includes(`"data2":`) && data.includes(`"data3":`);
 	
 	return encryptedFile;
 }
