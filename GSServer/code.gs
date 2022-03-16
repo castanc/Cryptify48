@@ -170,6 +170,32 @@ function validatePeriod(register) {
   return obj;
 }
 
+
+function updateTotals(register) {
+  Logger.log(t);
+
+  fileKey = register.UserEmail.substr(0, 4);
+  let folder = getCreateFolder(folderName);
+  let ss = getCreateSpreadSheet(folder, "Totals","RowId,FileId,LastDate,EncryEncryptions,Decryptions");
+
+  let sheet = ss.getActiveSheet();
+  var rangeData = sheet.getDataRange();
+  let grid = rangeData.getValues();
+  let row = gird.filter(x=>x[0]==fielKey && x[1] == register.RowId);
+  if ( row.length == 0 )
+  {
+    let data = [grid.length+1,fileKey, register.LastDate, register.te, register.td]
+      sheet.appendRow(data);
+  }
+  else
+  {
+    var datarange = sheet.getRange(`C${register.RowId}:E${register.RowId}`);
+    let data = [register.LastDate, register.te, register.td]
+    datarange.setValues([data]);
+  }
+}
+
+
 function updateServerRecord(totals) {
   let id = 0;
 
