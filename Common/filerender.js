@@ -215,7 +215,8 @@ function showData() {
 		hideControl("divMedia");
 		hideControl("divHide");
 		gotoPage(2);
-		openKeyboard();
+		setCurrentField("userPassword");
+		//openKeyboard();
 	}
 	else{
 		mediaOpen = true;
