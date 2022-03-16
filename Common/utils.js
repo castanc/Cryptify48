@@ -870,7 +870,7 @@ function confirmDownload() {
 	setField("txFileName",fileName);
 	setCurrentField("txFileName");
 	openKeyboard();
-	showBlock("divFileName");
+	gotoPage(4);
 	showError("Confirm Download/Save!. File will be unencrypted. Dispose properly.");
 }
 
