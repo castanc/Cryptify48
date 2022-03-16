@@ -139,7 +139,7 @@ function processEncrypt(password, hint, dateCreated, expirationDate, lockDate) {
             os.data3 = data.substr(encryptionLength);
 
 
-        data = `SoftwareID:Cryptico ${versionNumber}
+        data = `SoftwareID:${softwareID} ${versionNumber}
 ${showHint}${lk}${instructions}${fMode}
 data:${os.data}data2:${os.data2}data3:${os.data3}`;
 
