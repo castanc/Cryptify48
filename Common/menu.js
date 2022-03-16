@@ -101,8 +101,8 @@ function createMenu(step="start") {
 
 
     <div id="divDownload" class="text-center" style="display: none">
-    <div class="btn btn-secondary separation-btn-right">
-      <i class="fa fa-save red" title="Download" id="iconDownload"  style="cursor: pointer;"
+    <div class="btn btn-danger separation-btn-right">
+      <i class="fa fa-save" title="Download" id="iconDownload"  style="cursor: pointer;"
         onclick="confirmDownload()"></i>
         </div>
     </div>

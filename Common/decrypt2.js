@@ -80,6 +80,7 @@ function doDecryptNew() {
         showSpinner(false);
         if (resultDTO.result >= 0 )
         {
+            updateTotals(0,1);
             gotoPage(1);
             setField("userPassword","");
             hideControl("divInputText");
@@ -97,7 +98,6 @@ function doDecryptNew() {
             //todo update selFile with decrypted file info
             selFile.size = data.length;
             showData();
-            sumTotals("D",data.length);
             if ( !usingFile )
             {
                 if ( config.CopyDecrypted)

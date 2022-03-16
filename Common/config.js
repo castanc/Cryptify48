@@ -53,63 +53,37 @@ function createRecordFirstTime() {
 
 
 function createTotals() {
-    rec = {};
-    totals.StartDate = getTimeStamp(new Date());
-    totals.EndDate = totals.StartDate;
-    totals.te = 0;
-    totals.td = 0;
-    totals.teb = 0;
-    totals.tdb = 0;
-    totals.userAgent = navigator.userAgent;
-    totals.protocol = location.protocol;
-    totals.width = window.innerWidth;
-    totals.height = window.innerHeight;
-    if (mobile)
-        totals.mobile = 1;
-    else
-        totals.mobile = 0;
-    totals.deviceId = deviceId;
-    totals.userEmail = config.UserEmail;
-    try {
-        totals.RAM = navigator.deviceMemory.toString();
-    }
-    catch (ex) {
-        totals.RAM = "Error";
-    }
+    totals = {};
+    //RowId,FileId,ServerId,LastDate,Encryptions,Decryptions
+    totals.ServerId = config.ServerId;
+    totals.LastDate = new Date();
+    totals.Encryptions = 0;
+    totals.Decryptions = 0;
+    return totals;
 }
 
-function sumTotals(op, size) {
-    if (op == "E") {
-        totals.te++;
-        totals.teb += size;
-        saveTotals();
-    }
-    else if (op == "D") {
-        totals.td++;
-        totals.tdb += size;
-        saveTotals();
-    }
+function updateTotals(enc,dec=0) {
+    totals.Encryptions+=enc;
+    totals.Decryptions+=dec;
+    totals.LastDate = new Date();
+    saveTotals();
 }
 
-function updateTotals() {
-    return;
-}
 
-//todo: delayed to reimpelment
 function loadTotals() {
     let data1 = localStorage.getItem("totals");
     if (!data1) {
         //recreate totals
         createTotals();
-        totals.EndDate = getTimeStamp(new Date());
-        data1 = JSON.stringify(totals);
+        saveTotals();
     }
     if (data1)
         try {
             totals = JSON.parse(data1);
-            updateTotals();
         }
         catch (ex) {
+            createTotals();
+            saveTotals();
         }
     else
         createTotals();
@@ -178,7 +152,6 @@ function initConfig() {
             setField("txMobile", mobile);
             setField("txRAM", navigator.deviceMemory.toString());
             setField("txUserId", config.UserEmail);
-            loadTotals();
             function9();
         }
         catch (ex) {
@@ -193,6 +166,7 @@ function initConfig() {
                 registerFirstTime();
         }
     }
+    loadTotals();
 }
 
 function function9() {
@@ -254,9 +228,8 @@ function saveConfig() {
 }
 
 function saveTotals() {
-    totals.EndDate = getTimeStamp(new Date());
-    localStorage.setItem("totals", JSON.stringify(totals));
-    updateTotals();
+    if ( totals.Encryptions + totals.Decryptions  > 0)
+        localStorage.setItem("totals", JSON.stringify(totals));
 }
 
 function getSettingsSave() {

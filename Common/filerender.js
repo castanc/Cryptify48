@@ -178,9 +178,7 @@ function getFileTitle(fName) {
 	return shortName + " " + ext.toUpperCase() + ` (${fileSizeText})`;
 }
 
-function showData() {
-	encryptedFile = false;
-
+function hideMedia() {
 	hideControl("divImage");
 	hideControl("divVideo");
 	hideControl("divAudio");
@@ -188,10 +186,13 @@ function showData() {
 	hideControl("divText");
 	hideControl("divInputPDF");
 	hideControl("divInfo");
-	//hideControl("divHide");
 	hideControl("divSettings");
-	//hideControl("divView");
+}
 
+function showData() {
+	encryptedFile = false;
+
+	hideMedia();
 	mediaOpen = false;
 
 	canProcess = true;
@@ -212,17 +213,21 @@ function showData() {
 		showAudio();
 	else showText();
 	showFileInfo();
-	mediaOpen = true;
-	showBlock("divMedia");
-	showBlock("divHide");
+	if (encryptedFile) {
+		gotoPage(2);
+		openKeyboard();
+	}
+	else{
+		mediaOpen = true;
+		showBlock("divMedia");
+		showBlock("divHide");
+	}
 	toggleCanProcess(canProcess, fileSizeText);
-	if (encryptionDone || decryptionDone)
-	{
+	if (encryptionDone || decryptionDone) {
 		hideControl("divNext");
 		hideControl("divViewPassword");
 	}
-	else
-	{
+	else {
 		showBlock("divNext");
 		//showBlock("divViewPassword");
 	}
@@ -263,7 +268,7 @@ function showText() {
 	let fName = "Clipboard text";
 	decodeUrlData();
 	let ix = data.indexOf(`data:`);
-	if ( ix < 0 )
+	if (ix < 0)
 		ix = data.indexOf(`"data":"`);
 	if (ix > 0)
 		setField("loadedText", data.substr(ix));

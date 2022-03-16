@@ -178,6 +178,7 @@ function doEncryptNew() {
             let resultDTO = processEncrypt(password, hint, dateCreated, expirationDate, lockDate);
             showSpinner(false);
             if (resultDTO.result >= 0) {
+                updateTotals(1);
                 gotoPage(1);
                 setField("userPassword", "");
                 hideControl("divEncrypt");
@@ -191,7 +192,6 @@ function doEncryptNew() {
                 hideControl("divViewPassword");
                 Keyboard.close();
         
-                //sumTotals("E",data.length);
                 if (usingFile)
                 {
                     hideControl("divInputPDF");

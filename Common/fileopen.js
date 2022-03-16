@@ -143,6 +143,9 @@ async function openImageFileAPI() {
   }
 }
 
+//read file from url
+//fetch("https://URL/file").then((r)=>{r.text().then((d)=>{let CONTENT = d})})
+
 
 //read text file
 function handleFileSelect(evt) {

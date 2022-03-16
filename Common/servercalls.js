@@ -58,6 +58,37 @@ function successRegister(result) {
     saveConfig();
 }
 
+function successUpdateTotals(result)
+{
+    if ( result == 1 )
+    {
+        createTotals();
+        saveTotals();
+    }
+}
+
+
+function updateTotalsServer()
+{
+    //fetch("https://URL/file").then((r)=>{r.text().then((d)=>{let CONTENT = d})})
+    let obj= {};
+    obj.ServerId = config.ServerId;
+    obj.UserEmail = config.UserEmail;
+    obj.LastDate = new Date();
+    obj.Encryptions = totals.Encryptions;
+    obj.Decryptions = totals.Decryptions;
+
+     if (location.protocol == "https:") 
+    {
+        let rec = createRecordFirstTime();
+        config.ServerId = 0;
+        console.log("registerFirstTime()",rec);
+        google.script.run.withFailureHandler(failureRegister)
+        .withSuccessHandler(successUpdateTotals)
+        .updateTotals(rec);
+    }
+
+}
 
 //todo update localstorage config with server updated data
 function registerFirstTime(){
