@@ -866,11 +866,12 @@ function getIsDesktop() {
 function confirmDownload() {
 
 	hideControl("divDownload");
+	hideControl("divFileInfo");
 	showBlock("divDownload2");
 	setField("txFileName",fileName);
 	setCurrentField("txFileName");
+	showBlock("divFileName");
 	openKeyboard();
-	gotoPage(4);
 	showError("Confirm Download/Save!. File will be unencrypted. Dispose properly.");
 }
 
@@ -880,6 +881,7 @@ function doDownload() {
 	if ( fn.length > 0 )
 		fileName = fn;
 
+	hideControl("divFileName");
 	if (data.length > 0) {
 		//downloadDataFile(data, fileName);
 		//todo: not downloading text files

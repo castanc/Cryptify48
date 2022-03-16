@@ -88,6 +88,19 @@ function getAsciis() {
     return text;
 }
 
+function protectFields(flds)
+{
+    let f = flds.split(",");
+    f.forEach(fld=>{
+        let x = document.getElementById(fld);
+        if ( x )
+        {
+            x.style.backgroundColor = "black";
+            x.style.color = "white";
+        }
+    })
+}
+
 function setCurrentField(cField) {
     if (currentField.length > 0) {
         let x = document.getElementById(currentField);

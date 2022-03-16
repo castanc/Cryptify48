@@ -358,10 +358,10 @@ function togglePage() {
         showHintMessage();
         setCurrentField("pwdHint");
     }
-    else if ( pagee == 4 )
+    else if ( page == 4 )
     {
         if ( !encryptedFile)
-            setField("txFileName",`${fileNamme}.crypti.txt`);
+            setField("txFileName",`${fileName}.crypti.txt`);
         else
             setField("txFileName",fileName);
         setCurrentField("txFileName");
@@ -645,6 +645,7 @@ function toggleSysInfo() {
         showInfo("System Info");
         console.log("userEmail", userEmail);
         showBlock("divSysInfo");
+        //protectFields("txUserId,txDarkMode,txFileAPISupported,txCanCopy,txProtocol,txWidth,txRAM,txMobile,txUserAgent");
     }
     else {
         showInfo("");
@@ -804,7 +805,9 @@ function function6() {
         //     getUserEmail();
         openKeyboard();
     }
-    disableInputs(mobile);
+    //disableInputs(mobile);
+    protectFields("txUserId,txDarkMode,txFileAPISupported,txCanCopy,txProtocol,txWidth,txRAM,txMobile,txUserAgent");
+
 
 }
 

@@ -1,4 +1,4 @@
-var versionNumber = "4.12.2"; 
+var versionNumber = "4.12.6"; 
 var softwareID = "ReCrypti.co";
 var environment = "Stage";
 var fileHandle;
@@ -40,7 +40,7 @@ var languageCode = "en";
 var languageName = "English";
 var userIPAddress = "";
 var page = 1;
-var totalPages = 4;
+var totalPages = 3;
 var cb = {};            //clipboard object
 var sp = {} //send parameters
 var directLink = "";
