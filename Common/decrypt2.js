@@ -67,8 +67,6 @@ function processDecrypt(password) {
 
 
 function doDecryptNew() {
-        event.preventDefault();
-
     let result = validatePassword();
     if ( !result )
     {

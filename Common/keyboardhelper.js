@@ -1,12 +1,26 @@
 var currentField = "";
 
 function openKeyboard(force = false) {
+    let currVal = "";
     if (force || mobile || config.UseGreenKeyboard) {
         if (currentField.length > 0) {
             let x = document.getElementById(currentField);
-            Keyboard.open(x.value, keyed);
+            if ( x) 
+                currVal = x.value;
         }
+        Keyboard.open(currVal, keyed);
     }
+}
+
+
+function toggleKeyboard()
+{
+    if ( Keyboard.isOpen)
+        Keyboard.close();
+    else
+        openKeyboard();
+    
+        Keyboard.isOpen = !Keyboard.isOpen;
 }
 
 function keyed(k) {

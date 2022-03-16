@@ -753,7 +753,6 @@ function textToBlob(text) {
 
 
 async function openImageFile() {
-	event.preventDefault();
 	clear();
 	hideControl("divHelp");
 	showMessage("");
@@ -805,7 +804,6 @@ function writeInnerHTML(divId, html) {
 }
 
 function toggleMedia() {
-	event.preventDefault();
 
 	mediaOpen = !mediaOpen;
 	let done = encryptionDone || decryptionDone;
@@ -866,7 +864,6 @@ function getIsDesktop() {
 }
 
 function confirmDownload() {
-	event.preventDefault();
 
 	hideControl("divDownload");
 	showBlock("divDownload2");
@@ -874,7 +871,6 @@ function confirmDownload() {
 }
 
 function doDownload() {
-	event.preventDefault();
 
 	if (data.length > 0) {
 		//downloadDataFile(data, fileName);

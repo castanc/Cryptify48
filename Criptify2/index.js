@@ -101,7 +101,6 @@ function gotoPage(pageId) {
 
 
 function nextPage() {
-    event.preventDefault();
 
     handleSysIcons();
     currentSection = `PAGE${page}`;
@@ -129,7 +128,6 @@ function showSection(sectionName) {
 
 
 async function doCopy() {
-    event.preventDefault();
 
     copyToClipboardNew(data, true);
 
@@ -139,7 +137,6 @@ async function doCopy() {
 
 
 function pasteFromClipboard(fieldId) {
-    event.preventDefault();
 
     pasteClipboard();
     // let text = getField("inputText");
@@ -214,7 +211,6 @@ function enableViewPassword(idField, eyeField) {
     togglePassword.addEventListener('click', function (e) {
         // toggle the type attribute
         e.preventDefault();
-        //event.preventDefault();
         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
         password.setAttribute('type', type);
         // toggle the eye slash icon
@@ -316,14 +312,9 @@ function showPasswordMessage() {
 function showHintMessage() {
 
     if (config.ShowHelp) {
-        let pwd = getPassword();
-        if (pwd.length < config.MinPwdLen) {
-            hideControl("divMedia");
-            hideControl("divInputText");
-            gotoPage(2);
-            showWarning("Optional <i>Password Hint</i>,", statusWarning);
-            setFocus("userPassword");
-        }
+        showWarning("Optional <i>Password Hint</i>,", statusWarning);
+        if ( !mobile )
+        setFocus("userPassword");
     }
 
 }
@@ -368,6 +359,14 @@ function togglePage() {
         setCurrentField("pwdHint");
     }
 
+    if (mobile || config.UseGreenKeyboard) {
+        if (Keyboard.isOpen)
+            hideControl("divKeys");
+        else
+            showBlock("divKeys");
+    }
+
+
     //if (encryptedFile || manualText || dataFromClipboard)
     showFileInfo();
 
@@ -379,8 +378,7 @@ function togglePage() {
         showBlock("divHide");
     }
 
-    if (mobile || config.UseGreenKeyboard)
-        openKeyboard();
+    openKeyboard();
 
 }
 
@@ -483,7 +481,6 @@ ${nextIcon} Next page</br>
 }
 
 function clear() {
-    event.preventDefault();
     closeAllAux();
     hideControl("divHelp");
 
@@ -570,7 +567,6 @@ function enableInput() {
 }
 
 function viewInputPDF() {
-    event.preventDefault();
 
     if (!mobile) {
         let pdfWindow = window.open("")
@@ -626,7 +622,6 @@ function doReadFile(evt) {
 
 
 function toggleSysInfo() {
-    event.preventDefault();
 
     hideControl("divHelp");
     Keyboard.close();
@@ -653,7 +648,6 @@ function toggleSysInfo() {
 
 
 function toggleSettings() {
-    event.preventDefault();
     hideControl("divHelp");
     settingsOpen = !settingsOpen;
     Keyboard.close();
@@ -702,8 +696,7 @@ function saveEmail(email) {
         createConfig();
         saveConfig();
         initConfig();
-        if (location.protocol != "https:")
-        {
+        if (location.protocol != "https:") {
             config.ServerId = 0;
             config.FreeDays = 1;
             saveConfig();
@@ -817,7 +810,6 @@ function initTogglePassword() {
     togglePassword.addEventListener('click', function (e) {
         // toggle the type attribute
         //e.preventDefault();
-        event.preventDefault();
         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
         password.setAttribute('type', type);
         // toggle the eye slash icon
@@ -832,7 +824,6 @@ function initToggleMedia() {
     togglePassword2.addEventListener('click', function (e) {
         // toggle the type attribute
         //e.preventDefault();
-        event.preventDefault();
         // toggle the eye slash icon
         this.classList.toggle('fa-eye');
         if (mediaOpen)
@@ -905,7 +896,6 @@ function createMenuNavBar(genAddUpdate = false, icons = false) {
 
 
 function doShare() {
-    event.preventDefault();
 
     if (data.length > 0)
         shareData("Criptyfy", data, landingLink);
@@ -916,7 +906,6 @@ function doShare() {
 
 
 function eraseField() {
-    event.preventDefault();
     if (currentField.length > 0) {
         setField(currentField, "");
         Keyboard.properties.value = "";

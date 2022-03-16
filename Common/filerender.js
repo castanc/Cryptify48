@@ -277,12 +277,12 @@ function showText() {
 	showPasswordMessage();
 	showBlock("divText");
 	showBlock("divMedia");
+	mediaOpen = true;
 	if ( !(encryptionDone || decryptionDone) || encryptedFile)
 	{
 		gotoPage(2);
-		openKeyboard();
 	}
-	mediaOpen = true;
+	openKeyboard(true);
 }
 
 function showNoVisor() {
