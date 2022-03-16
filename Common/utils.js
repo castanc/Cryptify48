@@ -758,7 +758,7 @@ function textToBlob(text) {
 
 async function openImageFile() {
 	clear(false);
-	Keyboard.close();
+	//Keyboard.close();
 	hideControl("divHelp");
 	showMessage("");
 	hideControl("divInfo");
