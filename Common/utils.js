@@ -631,6 +631,8 @@ function showInfoAt(divId, msg, title = "") {
 	if (title.length == 0)
 		title = `<i class="fas fa-info-circle"></i>`;
 	let div = document.getElementById(divId);
+	if (div)
+	{
 	if (msg.length > 0)
 		div.innerHTML = `<div class="icon-size alert alert-info field-size">
 		<strong>${title}</strong> ${msg}
@@ -638,6 +640,8 @@ function showInfoAt(divId, msg, title = "") {
 	`;
 	else
 		div.innerHTML = "";
+	}
+	else console.error(`Invalid div ${divId}`);
 
 
 }
@@ -753,7 +757,8 @@ function textToBlob(text) {
 
 
 async function openImageFile() {
-	clear();
+	clear(false);
+	Keyboard.close();
 	hideControl("divHelp");
 	showMessage("");
 	hideControl("divInfo");
@@ -854,6 +859,9 @@ function getSizeText(len) {
 
 function isEncryptedData() {
 	encryptedFile = data.includes("data:") && data.includes(`data2:`) && data.includes(`data3:`);
+	if (!encryptedFile )
+		encryptedFile = data.includes(`"data":`) && data.includes(`"data2":`) && data.includes(`"data3":`);
+	
 	return encryptedFile;
 }
 
@@ -870,7 +878,7 @@ function confirmDownload() {
 	showBlock("divDownload2");
 	setField("txFileName",fileName);
 	setCurrentField("txFileName");
-	showBlock("divFileName");
+	gotoPage(4);
 	openKeyboard();
 	showError("Confirm Download/Save!. File will be unencrypted. Dispose properly.");
 }
@@ -881,7 +889,7 @@ function doDownload() {
 	if ( fn.length > 0 )
 		fileName = fn;
 
-	hideControl("divFileName");
+	hideControl("PAGE4");
 	if (data.length > 0) {
 		//downloadDataFile(data, fileName);
 		//todo: not downloading text files
@@ -1370,6 +1378,19 @@ function addTrace(text, traceType = "MSG") {
 
 function renderTrace(id = "trace") {
 
+		
+	let lines = "";
+	traces.forEach(line=>{
+		lines = `${lines}\n${line}`;
+	})
+	setField("txTrace",lines);
+	if ( traceEnabled)
+		showBlock("divTrace");
+
+	sessionStorage.setItem("trace",lines);
+	clearTrace();
+	return;
+
 	let txt = "";
 	let html = `<table class="table">`;
 	let rows = "";
@@ -1525,4 +1546,5 @@ function pasteClipboard() {
 
 function clearTrace() {
 	traces = [];
+	hideControl("divTrace");
 }

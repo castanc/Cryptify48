@@ -15,6 +15,7 @@ function openKeyboard(force = false) {
 
 function toggleKeyboard()
 {
+
     if ( Keyboard.isOpen)
         Keyboard.close();
     else

@@ -61,20 +61,26 @@ const Keyboard = {
         });
     },
 
+    //tab key: fa fa-step-forward
     _createKeys() {
         const fragment = document.createDocumentFragment();
         const keyLayout = [
             "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
-            "'","q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
+            "tab","q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
             "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
             "done", "z", "x", "c", "v", "b", "n", "m",",", ".", "?",
-            "@","(",")","space", "acute" 
+            "'","@","(",")","space", "acute" 
         ];
 
         // Creates HTML for an icon
         const createIconHTML = (icon_name) => {
             return `<i class="material-icons">${icon_name}</i>`;
         };
+
+        const createFAIconHTML = (icon_name) => {
+            return `<i class="${icon_name}"></i>`;
+        };
+
 
 
         keyLayout.forEach(key => {
@@ -86,6 +92,15 @@ const Keyboard = {
             keyElement.classList.add("keyboard__key");
 
             switch (key) {
+                case "tab":
+                    keyElement.classList.add("keyboard__key--wide");
+                    keyElement.innerHTML = createFAIconHTML("fa fa-step-forward");
+
+                    keyElement.addEventListener("click", () => {
+                        nextPage();
+                    });
+
+                    break;
                 case "backspace":
                     keyElement.classList.add("keyboard__key--wide");
                     keyElement.innerHTML = createIconHTML("backspace");
@@ -111,8 +126,10 @@ const Keyboard = {
 
                 case "tilde":
                     //setup toggeable button
+                    //<i class="fa-solid fa-tilde"></i>
+
+                    //keyElement.innerHTML = createFAIconHTML("fa-solid fa-tilde");
                     keyElement.classList.add("keyboard__key--activatable");
-                    keyElement.innerHTML = createIconHTML("circle");
 
                     keyElement.addEventListener("click", () => {
                         //this._toggleCapsLock();
@@ -168,6 +185,8 @@ const Keyboard = {
                 case "done":
                     keyElement.classList.add("keyboard__key--wide", "keyboard__key--dark");
                     keyElement.innerHTML = createIconHTML("check_circle");
+                    //keyElement.innerHTML = createFAIconHTML("fa fa-window-close");
+                    
 
                     keyElement.addEventListener("click", () => {
                         this.close();

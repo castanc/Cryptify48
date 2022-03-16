@@ -367,14 +367,6 @@ function togglePage() {
         setCurrentField("txFileName");
     }
 
-    if (mobile || config.UseGreenKeyboard) {
-        if (Keyboard.isOpen)
-            hideControl("divKeys");
-        else
-            showBlock("divKeys");
-    }
-
-
     //if (encryptedFile || manualText || dataFromClipboard)
     showFileInfo();
 
@@ -488,7 +480,7 @@ ${nextIcon} Next page</br>
     Keyboard.close();
 }
 
-function clear() {
+function clear(openkb = true) {
     closeAllAux();
     hideControl("divHelp");
 
@@ -551,7 +543,8 @@ function clear() {
     hideControl("divViewPassword");
     gotoPage(1);
     currentField = "inputText";
-    openKeyboard();
+    if ( openkb)
+        openKeyboard();
 }
 
 function setOffHelpMessage(value) {

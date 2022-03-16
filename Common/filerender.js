@@ -143,8 +143,8 @@ function showVideo() {
 
 function decodeUrlData() {
 	let decodedData = ""
-	encryptedFile = false;
-	if (data.includes(";base64,")) {
+	encryptedFile = isEncryptedData();
+	if ( !encryptedFile && data.includes(";base64,")) {
 		let parts = data.split(",");
 		if (parts.length == 2) {
 			decodedData = atob(parts[1]);
@@ -159,8 +159,6 @@ function decodeUrlData() {
 			}
 		}
 	}
-	else
-		encryptedFile = isEncryptedData();
 }
 
 
@@ -211,7 +209,6 @@ function showData() {
 	else if (dataType.includes("audio"))
 		showAudio();
 	else showText();
-	showFileInfo();
 	if (encryptedFile) {
 		mediaOpen = false;
 		hideControl("divMedia");
@@ -224,6 +221,7 @@ function showData() {
 		showBlock("divMedia");
 		showBlock("divHide");
 	}
+	showFileInfo();
 	toggleCanProcess(canProcess, fileSizeText);
 	if (encryptionDone || decryptionDone) {
 		hideControl("divNext");
