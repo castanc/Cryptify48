@@ -219,6 +219,13 @@ function showData() {
 		openKeyboard();
 	}
 	else{
+		let fn = "";
+		if ( fileName.toLocaleLowerCase().includes(".txt"))
+			fn = fileName.toLowerCase().replace(".txt","crypti.txt");
+		else 
+			fn = `${fileName}.crypti.txt`;
+			
+		setField("txFileName",fn);
 		mediaOpen = true;
 		showBlock("divMedia");
 		showBlock("divHide");
