@@ -162,7 +162,7 @@ function initConfig() {
             ctl.checked = config.ShowHelp;
 
             ctl = document.getElementById("chbZoom");
-            ctl.checked = config.FixZoomIssue;
+            ctl.checked = config.UseGreenKeyboard;
 
             setSysInfoData();
             function9();
@@ -279,11 +279,6 @@ function getSettingsSave() {
         config.UseGreenKeyboard = val;
 
         disableInputs(config.UseGreenKeyboard);
-
-        // if (config.FixZoomIssue) {
-        //     document.body.classList.remove("text-rsponsive");
-        // }
-
 
         if (configChanged) {
             saveConfig();
