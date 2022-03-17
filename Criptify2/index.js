@@ -54,8 +54,7 @@ function enableOptions() {
 
     if (encryptionDone || decryptionDone) {
         hideControl("divNext");
-        hideControl("PAGE1");
-        hideControl("PAGE2");
+        hidePages();
         if (usingFile)
             hideControl("divShare");
         else
@@ -283,8 +282,7 @@ function performEncrypt() {
     let r = doEncrypt();
     showResultMessage(r);
     if (r.result >= 0) {
-        hideControl("PAGE1");
-        hideControl("PAGE2");
+        hidePages();
     }
 
 
@@ -313,8 +311,8 @@ function showHintMessage() {
 
     if (config.ShowHelp) {
         showWarning("Optional <i>Password Hint</i>,", statusWarning);
-        if ( !mobile )
-        setFocus("userPassword");
+        if (!mobile)
+            setFocus("userPassword");
     }
 
 }
@@ -358,13 +356,15 @@ function togglePage() {
         showHintMessage();
         setCurrentField("pwdHint");
     }
-    else if ( page == 4 )
-    {
-        if ( !encryptedFile)
-            setField("txFileName",`${fileName}.crypti.txt`);
-        else
-            setField("txFileName",fileName);
-        setCurrentField("txFileName");
+    else if (page == 4) {
+        if (usingFile) {
+            if (!encryptedFile)
+                setField("txFileName", `${fileName}.crypti.txt`);
+            else
+                setField("txFileName", fileName);
+            setCurrentField("txFileName");
+        }
+        else gotoPage(1);
     }
 
     //if (encryptedFile || manualText || dataFromClipboard)
@@ -543,7 +543,7 @@ function clear(openkb = true) {
     hideControl("divViewPassword");
     gotoPage(1);
     currentField = "inputText";
-    if ( openkb)
+    if (openkb)
         openKeyboard();
 }
 
@@ -555,6 +555,14 @@ function setOffHelpMessage(value) {
 
 function setFieldTouched() {
     fieldTouched = true;
+}
+
+function hidePages() {
+    hideControl("PAGE1");
+    hideControl("PAGE2");
+    hideControl("PAGE3");
+    hideControl("PAGE4");
+
 }
 
 
@@ -633,8 +641,7 @@ function toggleSysInfo() {
     sysInfoOpen = !sysInfoOpen;
     if (sysInfoOpen) {
         currentSection = "divSysInfo";
-        hideControl("PAGE1");
-        hideControl("PAGE2");
+        hidePages();
         showInfo("System Info");
         console.log("userEmail", userEmail);
         showBlock("divSysInfo");
@@ -655,8 +662,7 @@ function toggleSettings() {
     Keyboard.close();
     if (settingsOpen) {
         currentSection = "divSysSettings";
-        hideControl("PAGE1");
-        hideControl("PAGE2");
+        hidePages();
         showInfo("Settings");
         configChanged = false;
         showBlock("divSysSettings");

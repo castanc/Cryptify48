@@ -204,8 +204,7 @@ function doEncryptNew() {
                 }
                 else {
                     copyToClipboardNew(data, false);
-                    hideControl("PAGE1");
-                    hideControl("PAGE2");
+                    hidePages();
                     showMedia("divText");
                     showBlock("divPaste");
                     showBlock("divOpenFile");

@@ -171,40 +171,12 @@ function handleFileSelect(evt) {
       selFile.name = file.name;
       selFile.readSize = data.length;
       return function (e) {
-        if (sharingFile) {
-
-          if(navigator.canShare ) //&& navigator.canShare({ files: e.target })) 
-          {
-            try
-            {
-            var filesArray = [file];
-            navigator.share(
-              {
-                text: 'Sharing file',
-                files: filesArray,
-                title: `${softwareID} ${versionNumber}`,
-                url: landingLink 
-              });
-            }
-            catch(ex)
-            {
-              showError(`Error sharing file.</br>${ex.message}`);
-            }
-          }
-        
-
-          sharingFile = false;
-        }
-        else {
           data = e.target.result;
           showSpinner(false);
           usingFile = true;
           if ( config.showMediaOnOpen)
             showData();
           Keyboard.close();
-
-        }
-
         let fSize = getSizeText(selFile.readSize);
 
       };

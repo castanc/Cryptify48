@@ -127,8 +127,7 @@ function doDecryptNew() {
                 showBlock("divFileInfo");
                 hideControl("divNext");
             }
-            hideControl("PAGE1");
-            hideControl("PAGE2");
+            hidePages();
         }
         else
         {

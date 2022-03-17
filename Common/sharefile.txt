@@ -1,0 +1,20 @@
+        if (sharingFile) {
+
+          if(navigator.canShare ) //&& navigator.canShare({ files: e.target })) 
+          {
+            try
+            {
+            var filesArray = [file];
+            navigator.share(
+              {
+                text: 'Sharing file',
+                files: filesArray,
+                title: `${softwareID} ${versionNumber}`,
+                url: landingLink 
+              });
+            }
+            catch(ex)
+            {
+              showError(`Error sharing file.</br>${ex.message}`);
+            }
+          }
