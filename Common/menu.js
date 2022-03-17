@@ -58,7 +58,7 @@ function createMenu(step="start") {
     </div>
 
     <div id="divShare" style="display: none;">
-    <div class="btn btn-secondary separation-btn-right">
+    <div class="btn btn-success separation-btn-right">
       <i class="fas fa-share" id="shareIt"  style="cursor: pointer;" onclick="doShare()"
         title="Share Results"></i>
         </div>
