@@ -105,8 +105,7 @@ function setCurrentField(cField) {
     Keyboard.properties.value = x.value;
 
     showBlock("divErase");
-    if ( (mobile || config.UseGreenKeyboard)) // && !Keyboard.properties.isOpen ) //&& !mediaOpen )
-        openKeyboard();
+    openKeyboard();
 
     // let dbgMsg = `setCurrentField(${cField}) [${Keyboard.properties.value}]`;
     // console.log(dbgMsg);

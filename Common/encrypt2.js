@@ -149,6 +149,12 @@ data:${os.data}data2:${os.data2}data3:${os.data3}`;
                 fileName = fn;
 
             outFileName = fileName; //`${fileName}.crypti.txt`;
+            if ( !outFileName.toLowerCase().includes(".crypti"))
+            {
+                let ix = outFileName.lastIndexOf(".");
+                if ( ix >=0 )
+                    outFileName = outFileName.substr(0,ix) + ".crypti" + outFileName.substr(ix);
+            }
             downloadDataFile(JSON.stringify(os), outFileName);
             //writeTextFile(null,JSON.stringify(os), `${fileName}.json`)
             resultDTO.message = "File encrypted and downloaded locally.";

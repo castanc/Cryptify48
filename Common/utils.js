@@ -887,7 +887,16 @@ function doDownload() {
 
 	let fn = getField("txFileName");
 	if ( fn.length > 0 )
+	{
+		if ( encryptionDone )
+		{
+			fn = fn.toLowerCase().replace(".txt","");
+			if ( !fn.toLowerCase().includes(".crypti"))
+				fn = fn + ".crypti";
+			fn = fn + ".txt";
+		}
 		fileName = fn;
+	}
 
 	hideControl("PAGE4");
 	if (data.length > 0) {
