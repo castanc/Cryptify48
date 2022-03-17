@@ -6,8 +6,8 @@ const Keyboard = {
     },
 
     shiftKeys: {
-        original: "1234567890,.?'()",
-        shifted: "!~#$%^&*[];:/\"{}"
+        original: "1234567890,.?'@",
+        shifted: "!~#$%^&*+-;:/\"="
     },
 
 
