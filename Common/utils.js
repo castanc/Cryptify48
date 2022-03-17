@@ -768,8 +768,6 @@ async function openImageFile() {
 	hideControl("divHide");
 	hideTitle();
 	initialIcons = false;
-	//disableInputs(mobile);
-
 	
 	if (settingsOpen)
 		toggleSettings();
@@ -1336,7 +1334,7 @@ function showBlock(ctl) {
 }
 
 function showTitle() {
-	writeInnerHTML("divTitle", `<label>${softwareID} ${environment} Version: ${versionNumber}</label>`);
+	writeInnerHTML("divTitle", `<label>${softwareID} ${environment}  ${versionNumber}</label>`);
 }
 
 function hideTitle() {

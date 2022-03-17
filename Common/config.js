@@ -8,7 +8,7 @@ function createConfig() {
     config.LastReportDate = new Date();
     config.showMediaOnOpen = true;
     config.IP = "";
-    config.mobile = false;
+    config.mobile = mobile;
     config.UserEmail = userEmail;
     config.MinPwdLen = 4;
     config.GenPwdLen = 64;
@@ -23,6 +23,7 @@ function createConfig() {
     config.ed = new Date();
     config.FreeDays = 0;
     config.DeviceId = deviceId;
+    config.Language = getLanguage();
 }
 
 
@@ -35,6 +36,7 @@ function createRecordFirstTime() {
     rec.protocol = location.protocol;
     rec.height = window.innerHeight;
     rec.UserEmail = userEmail;
+    rec.Language = navigator.language;
     if (mobile)
         rec.mobile = 1;
     else
@@ -106,6 +108,7 @@ function setSysInfoData()
     {
         setField("txTotals",`Encr:${totals.te} Decr:${totals.td}`);
     }
+    setField("txLang",navigator.language);
 }
 
 function initConfig() {
@@ -274,6 +277,8 @@ function getSettingsSave() {
         val = ctl.checked;
         configChanged = configChanged || config.UseGreenKeyboard != val;
         config.UseGreenKeyboard = val;
+
+        disableInputs(config.UseGreenKeyboard);
 
         // if (config.FixZoomIssue) {
         //     document.body.classList.remove("text-rsponsive");

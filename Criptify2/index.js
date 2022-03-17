@@ -357,14 +357,11 @@ function togglePage() {
         setCurrentField("pwdHint");
     }
     else if (page == 4) {
-        if (usingFile) {
-            if (!encryptedFile)
-                setField("txFileName", `${fileName}.crypti.txt`);
-            else
-                setField("txFileName", fileName);
-            setCurrentField("txFileName");
-        }
-        else gotoPage(1);
+        if (!encryptedFile)
+            setField("txFileName", `${fileName}.crypti.txt`);
+        else
+            setField("txFileName", fileName);
+        setCurrentField("txFileName");
     }
 
     //if (encryptedFile || manualText || dataFromClipboard)
@@ -735,6 +732,8 @@ function function6() {
     mobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
     getIsDesktop();
 
+    
+
     maxData = navigator.deviceMemory * 1024 * 1024 * 3;
 
 
@@ -772,16 +771,17 @@ function function6() {
 
     showTitle();
     window.scrollTo(0, 1);
+
+    if ( location.protocol != "https:")
+        initConfig();
+
     setCurrentField("inputText");
-    if (mobile)
-        config.UseGreenKeyboard = true;
 
     //start********************************************************************************
 
     // localStorage.removeItem("data");
     // localStorage.removeItem("user");
     // localStorage.removeItem("device");
-    isGoogleVer = true;
     console.log("isGoogleVersion:", isGoogleVer);
 
     getSavedUserEmail();
@@ -790,9 +790,8 @@ function function6() {
         showBlock("divUSER");
         showMessage("Please provide an email address. ( No password required).")
         setCurrentField("userEmail");
-        openKeyboard(mobile);
-        if (!mobile)
-            disableCtl("userEmail", false)
+        openKeyboard(config.UseGreenKeyboard);
+        disableCtl("userEmail", config.UseGreenKeyboard)
     }
     else {
         createMenu();
@@ -805,8 +804,8 @@ function function6() {
         //     getUserEmail();
         openKeyboard();
     }
-    //disableInputs(mobile);
-    protectFields("txUserId,txDarkMode,txFileAPISupported,txCanCopy,txProtocol,txWidth,txHeight,txTotals,txtd,txRAM,txMobile,txUserAgent");
+    disableInputs(mobile);
+    protectFields("txUserId,txDarkMode,txFileAPISupported,txCanCopy,txProtocol,txWidth,txHeight,txLang,txTotals,txtd,txRAM,txMobile,txUserAgent");
 
 
 }

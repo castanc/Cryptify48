@@ -117,7 +117,7 @@ function recordFirstTime(register) {
   fileKey = register.UserEmail.substr(0, 4);
   let folder = getCreateFolder(folderName);
   let ss = getCreateSpreadSheet(folder, `U_${fileKey}`,
-    "RowId,DeviceId,UserEmail,StartDate,EndDate,Mobile,UserAgent,RAM,width,height,IP,protocol");
+    "RowId,DeviceId,UserEmail,StartDate,EndDate,Mobile,UserAgent,RAM,width,height,IP,protocol,Language");
 
 
   let row = getUserRows(ss, register);
@@ -127,7 +127,8 @@ function recordFirstTime(register) {
     let sheet = ss.getActiveSheet();
     r.serverId = row.RowCount+1;
     let data = [r.serverId, register.deviceId, register.userEmail, register.StartDate,
-      register.EndDate, register.mobile, register.userAgent, register.RAM, register.width, register.height, register.IP, register.protocol];
+      register.EndDate, register.mobile, register.userAgent, register.RAM, register.width, register.height, register.IP, 
+      register.protocol, register.Language];
     sheet.appendRow(data);
     r.userDevices = row.devices;
   }
@@ -145,52 +146,27 @@ function recordFirstTime(register) {
   return JSON.stringify(r);
 }
 
-function validatePeriod(register) {
-  let obj = {};
-  obj.freeDays = 0;
-  obj.id = 0;
-  obj.ed = new Date.now;
-
-  fileKey = register.UserEmail.substr(0, 4);
-  let folder = getCreateFolder(folderName);
-  let ss = getCreateSpreadSheet(folder, `U_${fileKey}`, "RowId,DeviceId,UserEmail,StartDate,EndDate,Mobile,UserAgent,RAM,width,height,IP,protocol");
-  let row = getRow(ss, register.deviceId, register.UserEmail);
-  if (row.data.length > 0) {
-    obj.id = row[0];
-    let ds = row[3];
-    let ed = addDays(sd, daysFree);
-    let ms = ed.getTime() - sd.getTime();
-
-    // To calculate the no. of days between two dates
-    //let secs = ms / 1000;
-    //let hours = ms / (1000 * 3600);
-    obj.ed = ed;
-    obj.freeDays = ms / (1000 * 3600 * 24);
-  }
-  return obj;
-}
-
 
 function updateTotals(register) {
   Logger.log(t);
 
   fileKey = register.UserEmail.substr(0, 4);
   let folder = getCreateFolder(folderName);
-  let ss = getCreateSpreadSheet(folder, "Totals","RowId,FileId,LastDate,EncryEncryptions,Decryptions");
+  let ss = getCreateSpreadSheet(folder, "RecrypticoTotals","RowId,FileId,ServerId,LastDate,Encryptions,Decryptions");
 
   let sheet = ss.getActiveSheet();
   var rangeData = sheet.getDataRange();
   let grid = rangeData.getValues();
-  let row = gird.filter(x=>x[0]==fielKey && x[1] == register.RowId);
+  let row = gird.filter(x=> x[1]==fileKey && x[2] == register.ServerId);
   if ( row.length == 0 )
   {
-    let data = [grid.length+1,fileKey, register.LastDate, register.te, register.td]
+    let data = [grid.length+1,fileKey, register.ServerId,register.LastDate, register.te, register.td]
       sheet.appendRow(data);
   }
   else
   {
-    var datarange = sheet.getRange(`C${register.RowId}:E${register.RowId}`);
-    let data = [register.LastDate, register.te, register.td]
+    var datarange = sheet.getRange(`C${row[0]}:F${row[0]}`);
+    let data = [register.ServerId,register.LastDate, register.te, register.td]
     datarange.setValues([data]);
   }
 }
