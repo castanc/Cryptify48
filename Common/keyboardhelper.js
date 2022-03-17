@@ -104,6 +104,7 @@ function setCurrentField(cField) {
     x.style.color = "black";
     Keyboard.properties.value = x.value;
 
+    showBlock("divErase");
     if ( (mobile || config.UseGreenKeyboard)) // && !Keyboard.properties.isOpen ) //&& !mediaOpen )
         openKeyboard();
 
