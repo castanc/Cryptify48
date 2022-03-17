@@ -645,6 +645,7 @@ function toggleSysInfo() {
         showInfo("System Info");
         console.log("userEmail", userEmail);
         showBlock("divSysInfo");
+        setSysInfoData();
         //protectFields("txUserId,txDarkMode,txFileAPISupported,txCanCopy,txProtocol,txWidth,txRAM,txMobile,txUserAgent");
     }
     else {
@@ -714,7 +715,7 @@ function saveEmail(email) {
         hideControl("divUSER");
         showHelp();
         showBlock("PAGE1");
-        openKeyboard();
+        openKeyboard(mobile);
         disableInputs(mobile);
         warningMessage();
 
@@ -805,7 +806,7 @@ function function6() {
         openKeyboard();
     }
     //disableInputs(mobile);
-    protectFields("txUserId,txDarkMode,txFileAPISupported,txCanCopy,txProtocol,txWidth,txRAM,txMobile,txUserAgent");
+    protectFields("txUserId,txDarkMode,txFileAPISupported,txCanCopy,txProtocol,txWidth,txHeight,txTotals,txtd,txRAM,txMobile,txUserAgent");
 
 
 }

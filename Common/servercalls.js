@@ -75,8 +75,8 @@ function updateTotalsServer()
     obj.ServerId = config.ServerId;
     obj.UserEmail = config.UserEmail;
     obj.LastDate = new Date();
-    obj.Encryptions = totals.Encryptions;
-    obj.Decryptions = totals.Decryptions;
+    obj.Encryptions = totals.te;
+    obj.Decryptions = totals.td;
 
      if (location.protocol == "https:") 
     {

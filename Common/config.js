@@ -57,14 +57,14 @@ function createTotals() {
     //RowId,FileId,ServerId,LastDate,Encryptions,Decryptions
     totals.ServerId = config.ServerId;
     totals.LastDate = new Date();
-    totals.Encryptions = 0;
-    totals.Decryptions = 0;
+    totals.te = 0;
+    totals.td = 0;
     return totals;
 }
 
 function updateTotals(enc,dec=0) {
-    totals.Encryptions+=enc;
-    totals.Decryptions+=dec;
+    totals.te+=enc;
+    totals.td+=dec;
     totals.LastDate = new Date();
     saveTotals();
 }
@@ -88,6 +88,24 @@ function loadTotals() {
     else
         createTotals();
 
+}
+
+function setSysInfoData()
+{
+    setField("txDarkMode", darkMode);
+    setField("txFileAPISupported", supported.toString());
+    setField("txCanCopy", canCopy.toString());
+    setField("txUserAgent", navigator.userAgent);
+    setField("txProtocol", location.protocol);
+    setField("txWidth", window.innerWidth);
+    setField("txMobile", mobile);
+    setField("txRAM", navigator.deviceMemory.toString());
+    setField("txUserId", config.UserEmail);
+    setField("txHeight",window.innerHeight);
+    if ( totals )
+    {
+        setField("txTotals",`Encr:${totals.te} Decr:${totals.td}`);
+    }
 }
 
 function initConfig() {
@@ -143,15 +161,7 @@ function initConfig() {
             ctl = document.getElementById("chbZoom");
             ctl.checked = config.FixZoomIssue;
 
-            setField("txDarkMode", darkMode);
-            setField("txFileAPISupported", supported.toString());
-            setField("txCanCopy", canCopy.toString());
-            setField("txUserAgent", navigator.userAgent);
-            setField("txProtocol", location.protocol);
-            setField("txWidth", window.innerWidth);
-            setField("txMobile", mobile);
-            setField("txRAM", navigator.deviceMemory.toString());
-            setField("txUserId", config.UserEmail);
+            setSysInfoData();
             function9();
         }
         catch (ex) {
@@ -228,7 +238,7 @@ function saveConfig() {
 }
 
 function saveTotals() {
-    if ( totals.Encryptions + totals.Decryptions  > 0)
+    if ( totals.te + totals.td  > 0)
         localStorage.setItem("totals", JSON.stringify(totals));
 }
 

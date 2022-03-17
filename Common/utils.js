@@ -768,7 +768,7 @@ async function openImageFile() {
 	hideControl("divHide");
 	hideTitle();
 	initialIcons = false;
-	disableInputs(mobile);
+	//disableInputs(mobile);
 
 	
 	if (settingsOpen)
