@@ -242,7 +242,10 @@ function showData() {
 		//showBlock("divViewPassword");
 	}
 
-	hideControl("divShare");
+	if ( shareFile != null  && encryptedFile)
+		showBlock("divShare");
+	else
+		hideControl("divShare");
 }
 
 

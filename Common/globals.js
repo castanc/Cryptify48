@@ -1,4 +1,4 @@
-var versionNumber = "4.14.15"; 
+var versionNumber = "4.14.18"; 
 var softwareID = "ReCrypti.co";
 var environment = "Stage";
 var fileHandle;
@@ -124,3 +124,4 @@ var sharingFile = false;
 var registerUrl = "https://script.google.com/macros/s/AKfycbxvK6g57HTBPiWpPKwmRKsTS3y0vjLUK93c8YMlw1lsZkwkWhDCzuhaiqmMIwveAUgf/exec";
 var initialIcons = true;
 var configHash = "";
+var shareFile = "";

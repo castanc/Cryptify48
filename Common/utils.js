@@ -32,23 +32,34 @@ function setLabel(lblId, visible) {
 
 
 function shareData(title, text, url) {
-	if (usingFile) {
-		sharingFile = true;
-		let fctl = document.getElementById("files");
-		fctl.click();
-	}
-	else if (navigator.share) {
+	if (navigator.share) {
 		showMessage("Sharing....");
-		navigator.share({
-			title: title,
-			text: text,
-			url: url,
-		})
-			.then(() => showMessage("Shared succesfully.", statusSuccess))
-			.catch((error) => {
 
-				showError("Error sharing:" + error);
-			});
+		if (shareFile != null) {
+			navigator.share({
+				title: title,
+				file: shareFile,
+				url: url,
+			})
+				.then(() => showMessage("Shared succesfully.", statusSuccess))
+				.catch((error) => {
+	
+					showError("Error sharing:" + error);
+				});
+	
+		}
+		else {
+			navigator.share({
+				title: title,
+				text: text,
+				url: url,
+			})
+				.then(() => showMessage("Shared succesfully.", statusSuccess))
+				.catch((error) => {
+
+					showError("Error sharing:" + error);
+				});
+		}
 		canShare = false;
 	}
 	else {
@@ -563,13 +574,11 @@ function disableButtons(state) {
 
 }
 
-function disableCtl(ctlName, state = false, bg="black", tx="white") {
+function disableCtl(ctlName, state = false, bg = "black", tx = "white") {
 	let ctl = document.getElementById(ctlName);
-	if ( ctl)
-	{
+	if (ctl) {
 		ctl.disabled = state;
-		if ( !state)
-		{
+		if (!state) {
 			ctl.style.backgroundColor = bg;
 			ctl.style.color = tx;
 		}
@@ -631,15 +640,14 @@ function showInfoAt(divId, msg, title = "") {
 	if (title.length == 0)
 		title = `<i class="fas fa-info-circle"></i>`;
 	let div = document.getElementById(divId);
-	if (div)
-	{
-	if (msg.length > 0)
-		div.innerHTML = `<div class="icon-size alert alert-info field-size">
+	if (div) {
+		if (msg.length > 0)
+			div.innerHTML = `<div class="icon-size alert alert-info field-size">
 		<strong>${title}</strong> ${msg}
 	</div>
 	`;
-	else
-		div.innerHTML = "";
+		else
+			div.innerHTML = "";
 	}
 	else console.error(`Invalid div ${divId}`);
 
@@ -768,7 +776,7 @@ async function openImageFile() {
 	hideControl("divHide");
 	hideTitle();
 	initialIcons = false;
-	
+
 	if (settingsOpen)
 		toggleSettings();
 
@@ -857,9 +865,9 @@ function getSizeText(len) {
 
 function isEncryptedData() {
 	encryptedFile = data.includes(softwareID) && data.includes("data:") && data.includes(`data2:`) && data.includes(`data3:`);
-	if (!encryptedFile )
+	if (!encryptedFile)
 		encryptedFile = data.includes(softwareID) && data.includes(`"data":`) && data.includes(`"data2":`) && data.includes(`"data3":`);
-	
+
 	return encryptedFile;
 }
 
@@ -874,7 +882,7 @@ function confirmDownload() {
 	hideControl("divDownload");
 	hideControl("divFileInfo");
 	showBlock("divDownload2");
-	setField("txFileName",fileName);
+	setField("txFileName", fileName);
 	setCurrentField("txFileName");
 	gotoPage(4);
 	openKeyboard();
@@ -884,12 +892,10 @@ function confirmDownload() {
 function doDownload() {
 
 	let fn = getField("txFileName");
-	if ( fn.length > 0 )
-	{
-		if ( encryptionDone )
-		{
-			fn = fn.toLowerCase().replace(".txt","");
-			if ( !fn.toLowerCase().includes(".crypti"))
+	if (fn.length > 0) {
+		if (encryptionDone) {
+			fn = fn.toLowerCase().replace(".txt", "");
+			if (!fn.toLowerCase().includes(".crypti"))
 				fn = fn + ".crypti";
 			fn = fn + ".txt";
 		}
@@ -1385,16 +1391,16 @@ function addTrace(text, traceType = "MSG") {
 
 function renderTrace(id = "trace") {
 
-		
+
 	let lines = "";
-	traces.forEach(line=>{
+	traces.forEach(line => {
 		lines = `${lines}\n${line}`;
 	})
-	setField("txTrace",lines);
-	if ( traceEnabled)
+	setField("txTrace", lines);
+	if (traceEnabled)
 		showBlock("divTrace");
 
-	sessionStorage.setItem("trace",lines);
+	sessionStorage.setItem("trace", lines);
 	clearTrace();
 	return;
 
@@ -1489,35 +1495,34 @@ function function8() {
 
 }
 
-function dateDiff(sd,ed)
-{
+function dateDiff(sd, ed) {
 	let d1 = new Date(sd);
 	let d2 = new Date(ed);
-    let ms = d2.getTime() - d1.getTime();
+	let ms = d2.getTime() - d1.getTime();
 	return ms / (1000 * 3600 * 24);
 
-    // To calculate the no. of days between two dates
-    // let secs = ms / 1000;
-    // let hours = ms / (1000 * 3600);
-    // let days = ms / (1000 * 3600 * 24);
+	// To calculate the no. of days between two dates
+	// let secs = ms / 1000;
+	// let hours = ms / (1000 * 3600);
+	// let days = ms / (1000 * 3600 * 24);
 }
 
-function createGuid(){  
-	function S4() {  
-	   return (((1+Math.random())*0x10000)|0).toString(16).substring(1);  
-	}  
-	return (S4() + S4() + "-" + S4() + "-4" + S4().substr(0,3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();  
- }  
-   
+function createGuid() {
+	function S4() {
+		return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+	}
+	return (S4() + S4() + "-" + S4() + "-4" + S4().substr(0, 3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
+}
+
 
 function addDays(dt, days) {
-// 	let dt0 = new Date(dt);
-//   return new Date(dt0.getTime() + days*24*60*60*1000);
+	// 	let dt0 = new Date(dt);
+	//   return new Date(dt0.getTime() + days*24*60*60*1000);
 	var result = new Date(dt);
 	result.setDate(result.getDate() + days);
 	return result;
-	
- }
+
+}
 
 
 function pasteClipboard() {

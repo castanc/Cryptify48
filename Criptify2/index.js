@@ -795,9 +795,9 @@ function function6() {
     }
     else {
         createMenu();
-        showHelp();
         initTogglePassword();
         initConfig();
+        showHelp();
         // if (location.protocol != "https:")
         //     initConfig();
         // else
