@@ -182,6 +182,17 @@ function handleFileSelect(evt) {
       };
     })(f);
 
+    reader.onerror = function (error) {
+      showSpinner(false);
+      showError("Error reading file.", error);
+      reader.abort();
+    };
+
+    reader.onabort = function( abort ){
+      showSpinner(false);
+      showError("File Reader operation aborted");
+    }
+
     // Read in the image file as a data URL.
     if (readBase64)
       reader.readAsDataURL(f);
