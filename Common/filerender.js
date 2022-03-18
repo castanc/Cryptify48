@@ -6,10 +6,11 @@ function showFileInfo() {
 	hideControl("divMedia");
 	let isEncrypted = "";
 	if (encryptedFile) {
-		if (data.includes(`"Hint":"`)) {
-			let txHint = extract(data, `"Hint":"`, "\n");
-			setField("pwdHint", txHint);
-		}
+		//todo: infinite loop here
+		// if (data.includes(`"Hint":"`)) {
+		// 	let txHint = extract(data, `"Hint":"`, "\n");
+		// 	setField("pwdHint", txHint);
+		// }
 		txtEncrypted = `<b class="text-warning">This is an encrypted file.</b>`;
 		isEncrypted = "Encrypted";
 	}
